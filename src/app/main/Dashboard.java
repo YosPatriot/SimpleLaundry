@@ -4,6 +4,10 @@
  */
 package app.main;
 
+import app.form.Home;
+import app.menu.EventMenu;
+import app.services.UserSession;
+
 /**
  *
  * @author Yos Patriot
@@ -15,8 +19,28 @@ public class Dashboard extends javax.swing.JFrame {
      */
     public Dashboard() {
         initComponents();
+        init();
     }
-
+    private void init(){
+    menu.addEventMenu(new EventMenu() {
+            @Override
+            public void selectedMenu(int index) {
+                if(index==0){
+                    mainBody.displayForm(new Home(),"Beranda");
+                }else if(index == 1){
+         
+                }    
+                else if(index == 2){
+                    Login a = new Login();
+                    a.setVisible(true);
+                    UserSession.setUserLogin("");
+                    UserSession.setUserId(0);
+                    dispose();  
+                }    
+            }
+        });
+    mainBody.displayForm(new Home());
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,21 +50,38 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        menu1 = new app.menu.Menu();
+        panelBackground1 = new app.swing.PanelBackground();
+        menu = new app.menu.Menu();
+        mainBody = new app.component.MainBody();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        javax.swing.GroupLayout panelBackground1Layout = new javax.swing.GroupLayout(panelBackground1);
+        panelBackground1.setLayout(panelBackground1Layout);
+        panelBackground1Layout.setHorizontalGroup(
+            panelBackground1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBackground1Layout.createSequentialGroup()
+                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainBody, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE))
+        );
+        panelBackground1Layout.setVerticalGroup(
+            panelBackground1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(panelBackground1Layout.createSequentialGroup()
+                .addComponent(mainBody, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(menu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 353, Short.MAX_VALUE))
+            .addComponent(panelBackground1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu1, javax.swing.GroupLayout.DEFAULT_SIZE, 445, Short.MAX_VALUE)
+            .addComponent(panelBackground1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -83,6 +124,8 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private app.menu.Menu menu1;
+    private app.component.MainBody mainBody;
+    private app.menu.Menu menu;
+    private app.swing.PanelBackground panelBackground1;
     // End of variables declaration//GEN-END:variables
 }

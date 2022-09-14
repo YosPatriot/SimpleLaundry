@@ -23,20 +23,44 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
-              <Component id="menu1" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="0" pref="353" max="32767" attributes="0"/>
-          </Group>
+          <Component id="panelBackground1" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="menu1" alignment="0" pref="445" max="32767" attributes="0"/>
+          <Component id="panelBackground1" alignment="1" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="app.menu.Menu" name="menu1">
-    </Component>
+    <Container class="app.swing.PanelBackground" name="panelBackground1">
+
+      <Layout>
+        <DimensionLayout dim="0">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="menu" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="mainBody" pref="1010" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+        <DimensionLayout dim="1">
+          <Group type="103" groupAlignment="0" attributes="0">
+              <Component id="menu" alignment="0" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <Component id="mainBody" min="-2" pref="549" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
+          </Group>
+        </DimensionLayout>
+      </Layout>
+      <SubComponents>
+        <Component class="app.menu.Menu" name="menu">
+        </Component>
+        <Component class="app.component.MainBody" name="mainBody">
+        </Component>
+      </SubComponents>
+    </Container>
   </SubComponents>
 </Form>

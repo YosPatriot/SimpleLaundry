@@ -1,9 +1,16 @@
 
 package app.main;
 
+import app.form.DaftarHarga;
 import app.form.Home;
+import app.form.Transaksi;
+import app.form.Member;
+import app.form.Pegawai;
 import app.menu.EventMenu;
 import app.services.UserSession;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 
 public class Dashboard extends javax.swing.JFrame {
@@ -19,11 +26,20 @@ public class Dashboard extends javax.swing.JFrame {
             @Override
             public void selectedMenu(int index) {
                 if(index==0){
-                    mainBody.displayForm(new Home(),"Beranda");
+                    mainBody1.displayForm(new Home(),"Beranda");
                 }else if(index == 1){
-         
-                }    
-                else if(index == 2){
+                    mainBody1.displayForm(new DaftarHarga(), "Daftar Harga");
+                }else if(index == 2){
+                    mainBody1.displayForm(new Transaksi(), "Daftar Transaksi");
+                }else if (index==3){ 
+                    mainBody1.displayForm(new Pegawai(), "Pegawai");
+                }else if (index==4){ 
+                    try {
+                        mainBody1.displayForm(new Member(), "Member");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }else if(index == 5){
                     Login a = new Login();
                     a.setVisible(true);
                     UserSession.setUserLogin("");
@@ -32,7 +48,7 @@ public class Dashboard extends javax.swing.JFrame {
                 }    
             }
         });
-    mainBody.displayForm(new Home(),"Beranda");
+    mainBody1.displayForm(new Home(),"Beranda");
     }
    
     @SuppressWarnings("unchecked")
@@ -41,7 +57,7 @@ public class Dashboard extends javax.swing.JFrame {
 
         panelBackground1 = new app.swing.PanelBackground();
         menu = new app.menu.Menu();
-        mainBody = new app.component.MainBody();
+        mainBody1 = new app.component.MainBody();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -52,13 +68,13 @@ public class Dashboard extends javax.swing.JFrame {
             .addGroup(panelBackground1Layout.createSequentialGroup()
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainBody, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE))
+                .addComponent(mainBody1, javax.swing.GroupLayout.DEFAULT_SIZE, 1010, Short.MAX_VALUE))
         );
         panelBackground1Layout.setVerticalGroup(
             panelBackground1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(panelBackground1Layout.createSequentialGroup()
-                .addComponent(mainBody, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainBody1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -113,7 +129,7 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private app.component.MainBody mainBody;
+    private app.component.MainBody mainBody1;
     private app.menu.Menu menu;
     private app.swing.PanelBackground panelBackground1;
     // End of variables declaration//GEN-END:variables

@@ -9,6 +9,7 @@ import app.configurations.koneksi;
 import app.model.ModelDashboard;
 import app.services.dashboard;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +26,7 @@ public class Home extends Form {
     /**
      * Creates new form Home
      */
-     ResultSet rs = null;
+    ResultSet rs = null;
     Connection CC = new koneksi().connect();;
     PreparedStatement pst = null;
     Statement stt;
@@ -34,46 +35,48 @@ public class Home extends Form {
         initComponents();
         showTable();
         init();
+        getPemasukan();
     }
     private void showTable(){
        DefaultTableModel model = new DefaultTableModel() ;
-       model.addColumn("No");
        model.addColumn("Nama");
        model.addColumn("Alamat");
        model.addColumn("No HP");
-       model.addColumn("Pemasukan");
+       model.addColumn("Tanggal Masuk");
+       model.addColumn("Jenis Cucian");
        model.addColumn("Berat/Qty/Meter");
+       model.addColumn("Pemasukan");
        model.addColumn("Status");
-     
-       
-          try{
+        try{
             stt=CC.createStatement();
             rs = stt.executeQuery("SELECT * FROM pemesanan INNER JOIN customer ON customer.IdCustomer = pemesanan.IdCustomer"
                     + " INNER JOIN jeniscuci ON jeniscuci.IdJenisCuci = pemesanan.IdJenisCuci");
             int no =0;
-            
               while(rs.next()){
                 no++;
                 String nama = rs.getString("Nama");
                 String alamat = rs.getString("Alamat");
                 String noHp = rs.getString("NoHP");
+                Date tglMasuk = rs.getDate("Tgl_Masuk");
+                String jenis = rs.getString("JenisCuci");
                 String status = rs.getString("Status"); 
                 int harga = rs.getInt("Harga");
                 int qty = rs.getInt("Berat/Qty/Meter");
                 int pemasukan = harga*qty;
-                model.addRow(new Object[]{no++,nama,alamat,noHp,harga,qty,status});
+                model.addRow(new Object[]{nama,alamat,noHp,tglMasuk,jenis,qty,pemasukan,status});
                 table.setModel(model);
-                txtPemasukan.setText(Integer.toString(pemasukan));
               }
-              int hrg,qt,pemasukan;
-             // hrg = rs.getInt("Harga");
-//                qt = rs.getInt("Berat/Qty/Meter");
-//                pemasukan = hrg*qt;
-//              txtPemasukan.setText(Integer.toString(pemasukan));
           }catch(Exception e){
               JOptionPane.showMessageDialog(null, e);
           }
       
+    }
+    private void getPemasukan(){
+      int sum = 0;
+        for(int i =0;i<table.getRowCount();i++){
+            sum = sum +Integer.parseInt(table.getValueAt(i, 6).toString());  
+        }
+        txtPemasukan.setText(Integer.toString(sum));
     }
     private void init(){
          try{
@@ -150,7 +153,7 @@ public class Home extends Form {
             .addGroup(roundPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
                     .addGroup(roundPanel1Layout.createSequentialGroup()
@@ -188,6 +191,7 @@ public class Home extends Form {
         );
 
         roundPanel2.setBackground(new java.awt.Color(68, 30, 182));
+        roundPanel2.setPreferredSize(new java.awt.Dimension(279, 148));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/icon/pesanan.png"))); // NOI18N
 
@@ -257,7 +261,7 @@ public class Home extends Form {
             .addGroup(roundPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(txtPelanggan))
@@ -294,34 +298,38 @@ public class Home extends Form {
                 {null, null, null, null, null}
             },
             new String [] {
-                "No", "Nama", "No HP", "Alamat", "Status"
+                "No", "Nama", "No HP", "Alamat", "null"
             }
         ));
+        table.setShowGrid(false);
         jScrollPane1.setViewportView(table);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(68, 27, 184));
-        jLabel4.setText("Daftar Pesanan");
+        jLabel4.setText("Daftar Antrian");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(roundPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 772, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 85, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 418, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)))
+                        .addGap(18, 18, 18)
+                        .addComponent(roundPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)))
+                .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -331,11 +339,11 @@ public class Home extends Form {
                     .addComponent(roundPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(roundPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(roundPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
+                .addGap(35, 35, 35))
         );
     }// </editor-fold>//GEN-END:initComponents
 

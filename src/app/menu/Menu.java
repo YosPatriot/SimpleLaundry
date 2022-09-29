@@ -55,9 +55,12 @@ public class Menu extends javax.swing.JPanel {
     }
 
     private void initMenu() {
-        addMenu("Data", "4", 0);;
-        addMenu("Settings", "7", 1);
-        addMenu("Logout", "11", 2);
+        addMenu("Beranda", null, 0);
+        addMenu("Daftar Harga",null, 1);
+        addMenu("Transaksi", null, 2);
+        addMenu("Pegawai",null,3);
+        addMenu("Member", null, 4);
+        addMenu("Logout", null, 5);
         
         //  add more menu here
         menu.repaint();
@@ -84,7 +87,7 @@ public class Menu extends javax.swing.JPanel {
     private void addMenu(String menuName, String icon, int index) {
         MenuButton m = new MenuButton();
         m.setIcoName(icon);
-        m.setIcon(new ImageIcon(getClass().getResource("/app/icon/" + icon + ".png")));
+        //m.setIcon(new ImageIcon(getClass().getResource("/app/icon/" + icon + ".png")));
         m.setFont(m.getFont().deriveFont(Font.BOLD, 12));
         m.setForeground(new Color(127, 127, 127));
         m.setHorizontalAlignment(JButton.LEFT);
@@ -136,9 +139,9 @@ public class Menu extends javax.swing.JPanel {
                 MenuButton c = (MenuButton) com;
                 c.setForeground(new Color(127, 127, 127));
                 c.setEffectColor(new Color(173, 173, 173));
-                if (!c.getIcoName().contains("_s")) {
-                    c.setIcon(new ImageIcon(getClass().getResource("/app/icon/" + c.getIcoName() + ".png")));
-                }
+//                if (!c.getIcoName().contains("_s")) {
+//                    c.setIcon(new ImageIcon(getClass().getResource("/app/icon/" + c.getIcoName() + ".png")));
+//                }
             }
         }
     }
@@ -147,7 +150,7 @@ public class Menu extends javax.swing.JPanel {
         MenuButton cmd = (MenuButton) menu.getComponent(index);
         cmd.setForeground(Color.WHITE);
         cmd.setEffectColor(Color.WHITE);
-        cmd.setIcon(new ImageIcon(getClass().getResource("/app/icon/" + cmd.getIcoName() + "_s.png")));
+        //cmd.setIcon(new ImageIcon(getClass().getResource("/app/icon/" + cmd.getIcoName() + "_s.png")));
     }
 
     private void runEvent() {

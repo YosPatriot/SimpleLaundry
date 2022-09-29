@@ -6,14 +6,21 @@
             <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/component/MainBody.java</file>
             <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/swing/scrollbar/ScrollBarCustom.java</file>
             <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/main/Login.java</file>
+            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/form/Member.java</file>
             <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/main/Dashboard.java</file>
-            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/form/Home.java</file>
             <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/swing/scrollbar/ModernScrollBarUI.java</file>
-            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/menu/Menu.java</file>
-            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/services/dashboard.java</file>
             <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/model/ModelDashboard.java</file>
+            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/form/DaftarHarga.java</file>
+            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/model/ModelMember.java</file>
             <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/component/Form.java</file>
             <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/services/login.java</file>
+            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/form/Transaksi.java</file>
+            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/form/Pegawai.java</file>
+            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/form/Home.java</file>
+            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/menu/Menu.java</file>
+            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/services/dashboard.java</file>
+            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/services/UserSession.java</file>
+            <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/services/ServiceMember.java</file>
             <file>file:/C:/Users/Public/Documents/SimpleLaundry/src/app/swing/RoundPanel.java</file>
         </group>
     </open-files>

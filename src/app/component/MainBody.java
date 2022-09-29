@@ -49,7 +49,7 @@ public class MainBody extends javax.swing.JPanel {
         panelTitle.setOpaque(false);
 
         lbTitle.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        lbTitle.setForeground(new java.awt.Color(68, 30, 182));
+        lbTitle.setForeground(new java.awt.Color(68, 27, 184));
 
         javax.swing.GroupLayout panelTitleLayout = new javax.swing.GroupLayout(panelTitle);
         panelTitle.setLayout(panelTitleLayout);

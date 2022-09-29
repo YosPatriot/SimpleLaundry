@@ -41,7 +41,7 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="menu" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="mainBody" pref="1010" max="32767" attributes="0"/>
+                  <Component id="mainBody1" pref="1010" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -49,7 +49,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Component id="menu" alignment="0" max="32767" attributes="0"/>
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="mainBody" min="-2" pref="549" max="-2" attributes="0"/>
+                  <Component id="mainBody1" min="-2" pref="549" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -58,7 +58,7 @@
       <SubComponents>
         <Component class="app.menu.Menu" name="menu">
         </Component>
-        <Component class="app.component.MainBody" name="mainBody">
+        <Component class="app.component.MainBody" name="mainBody1">
         </Component>
       </SubComponents>
     </Container>

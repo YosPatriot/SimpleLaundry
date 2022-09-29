@@ -63,7 +63,7 @@
               <Font name="sansserif" size="18" style="1"/>
             </Property>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="b6" green="1e" red="44" type="rgb"/>
+              <Color blue="b8" green="1b" red="44" type="rgb"/>
             </Property>
           </Properties>
         </Component>

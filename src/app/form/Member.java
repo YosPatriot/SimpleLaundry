@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -34,19 +35,10 @@ public class Member extends Form {
     Statement stt;
     String sql;
     ServiceMember sm = new ServiceMember();
+    int MemberID;
     public Member() throws SQLException {
         initComponents();    
         sm.getData(table);     
-    }
-    public void insertData() throws SQLException{
-        
-        String nama = txtNama.getText();
-        String Alamat = txtAlamat.getText();
-        String NoHP = txtNoHP.getText();
-        ModelMember rows = new ModelMember();
-        ModelMember data = new ModelMember(rows.getMemberID(),nama,Alamat,NoHP);
-        ServiceMember in = new ServiceMember();
-        in.addMember(data);
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -89,8 +81,18 @@ public class Member extends Form {
         });
 
         jButton2.setText("Edit");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Delete");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(68, 27, 184));
@@ -107,6 +109,11 @@ public class Member extends Form {
                 "Nama", "Alamat", "No HP", "KodeMember"
             }
         ));
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -183,12 +190,61 @@ public class Member extends Form {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
          try {
              // TODO add your handling code here:
-             insertData();
-             sm.getData(table);
+            String nama = txtNama.getText();
+            String Alamat = txtAlamat.getText();
+            String NoHP = txtNoHP.getText();
+            ModelMember rows = new ModelMember();
+            ModelMember data = new ModelMember(rows.getMemberID(),nama,Alamat,NoHP);
+            sm.addMember(data);
+            sm.getData(table);
          } catch (SQLException ex) {
              Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
          }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        sm.deleteMember(MemberID);
+         try {
+             sm.getData(table);
+             //System.out.println(table.getSele);
+         } catch (SQLException ex) {
+             Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
+        // TODO add your handling code here:
+        int row = table.getSelectedRow();
+        String MemberId = (table.getModel().getValueAt(row,1)).toString();
+        String nama = (table.getModel().getValueAt(row,2)).toString();
+        String alamat = (table.getModel().getValueAt(row,3)).toString();
+        String noHP = (table.getModel().getValueAt(row,4)).toString();
+        MemberID=Integer.parseInt(MemberId);
+        txtNama.setText(nama);
+        txtAlamat.setText(alamat);
+        txtNoHP.setText(noHP);
+        System.out.println(MemberID);
+        
+    }//GEN-LAST:event_tableMouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+         String nama = txtNama.getText();
+            String Alamat = txtAlamat.getText();
+            String NoHP = txtNoHP.getText();
+            ModelMember data = new ModelMember(MemberID,nama,Alamat,NoHP);
+         try {
+             sm.updateMember(data,MemberID);
+         } catch (SQLException ex) {
+             Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+         }
+         try {
+             sm.getData(table);
+         } catch (SQLException ex) {
+             Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

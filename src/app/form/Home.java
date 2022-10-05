@@ -35,7 +35,7 @@ public class Home extends Form {
         initComponents();
         showTable();
         init();
-        getPemasukan();
+        //getPemasukan();
     }
     private void showTable(){
        DefaultTableModel model = new DefaultTableModel() ;
@@ -71,13 +71,13 @@ public class Home extends Form {
           }
       
     }
-    private void getPemasukan(){
-      int sum = 0;
-        for(int i =0;i<table.getRowCount();i++){
-            sum = sum +Integer.parseInt(table.getValueAt(i, 6).toString());  
-        }
-        txtPemasukan.setText(Integer.toString(sum));
-    }
+//    private void getPemasukan(){
+//      int sum = 0;
+//        for(int i =0;i<table.getRowCount();i++){
+//            sum = sum +Integer.parseInt(table.getValueAt(i, 6).toString());  
+//        }
+//        txtPemasukan.setText(Integer.toString(sum));
+//    }
     private void init(){
          try{
             stt=CC.createStatement();

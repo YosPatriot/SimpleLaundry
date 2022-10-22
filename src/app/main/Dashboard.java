@@ -28,11 +28,19 @@ public class Dashboard extends javax.swing.JFrame {
                 if(index==0){
                     mainBody1.displayForm(new Home(),"Beranda");
                 }else if(index == 1){
-                    mainBody1.displayForm(new DaftarHarga(), "Daftar Harga");
+                    try {
+                        mainBody1.displayForm(new DaftarHarga(), "Daftar Harga");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }else if(index == 2){
                     mainBody1.displayForm(new Transaksi(), "Daftar Transaksi");
                 }else if (index==3){ 
-                    mainBody1.displayForm(new Pegawai(), "Pegawai");
+                    try {
+                        mainBody1.displayForm(new Pegawai(), "Pegawai");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }else if (index==4){ 
                     try {
                         mainBody1.displayForm(new Member(), "Member");

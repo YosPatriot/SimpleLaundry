@@ -1,7 +1,7 @@
 package app.services;
 
 import app.configurations.koneksi;
-import app.model.ModelMember;
+import app.model.ModelPegawai;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -44,23 +44,51 @@ public class ServicePegawai {
             System.err.println(e);
         } 
     }
-    public void addPegawai(ModelMember data)throws SQLException{
+    public void addPegawai(ModelPegawai data)throws SQLException{
         try{
-           sql= "INSERT INTO Customer (Nama, Alamat, NoHP,Keterangan) values (?,?,?,'Member')";
+           sql= "INSERT INTO karyawan (Nama, Alamat, NoHP,Email,Jabatan) values (?,?,?,?,?)";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, data.getNama());
             pst.setString(2, data.getAlamat());
-            pst.setString(3, data.getNoHP());
+            pst.setString(3, data.getNoHp());
+            pst.setString(4, data.getEmail());
+            pst.setString(5, data.getJabatan());
         rs = pst.getGeneratedKeys();
         rs.first();
         pst.execute();
-        int IdMember = rs.getInt(1);
-        data.setMemberID(IdMember);
-        System.out.println("Keys : "+IdMember);
+        int IdPegawai = rs.getInt(1);
+        data.setPegawaiID(IdPegawai);
+        System.out.println("Keys : "+IdPegawai);
         rs.close();
         pst.close();   
         }catch(SQLException e){
             System.err.println(e);
+        }
+    }
+    public void updatePegawai(ModelPegawai data)throws SQLException{
+        try{
+           sql= "Update karyawan Set Nama=?, Alamat=?, NoHP=?, Email=?, Jabatan=? WHERE IdKaryawan="+data.getPegawaiID()+" limit 1";
+           pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pst.setString(1, data.getNama());
+            pst.setString(2, data.getAlamat());
+            pst.setString(3, data.getNoHp());
+            pst.setString(4, data.getEmail());
+            pst.setString(5, data.getJabatan());
+        pst.execute();
+        rs.close();
+        pst.close();   
+        }catch(SQLException e){
+            System.err.println(e);
+        }
+    }
+    public void deletePegawai(int pegawaiID){
+        try{
+            sql="DELETE FROM karyawan WHERE IdKaryawan = "+pegawaiID+"";
+            pst = CC.prepareStatement(sql);
+            pst.execute();
+            pst.close();
+        }catch(SQLException ex){
+            System.err.println(ex);
         }
     }
 }

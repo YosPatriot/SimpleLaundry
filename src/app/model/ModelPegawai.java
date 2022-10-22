@@ -92,8 +92,13 @@ public class ModelPegawai {
     }
     public ModelPegawai(){ 
     }
-    public ModelPegawai(int pegawaiID, String nama, String alamat, String noHp,String email,String jabatanint){
-    
+    public ModelPegawai(int pegawaiID, String nama, String alamat, String noHp,String email,String jabatan){
+        this.pegawaiID=pegawaiID;
+        this.nama=nama;
+        this.alamat=alamat;
+        this.noHp = noHp;
+        this.email=email;
+        this.jabatan=jabatan;
     }
     private int pegawaiID;
     private String username;

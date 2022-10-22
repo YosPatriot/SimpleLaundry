@@ -113,6 +113,9 @@ public class Member extends Form {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tableMouseClicked(evt);
             }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tableMouseReleased(evt);
+            }
         });
         jScrollPane1.setViewportView(table);
 
@@ -215,16 +218,7 @@ public class Member extends Form {
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
         // TODO add your handling code here:
-        int row = table.getSelectedRow();
-        String MemberId = (table.getModel().getValueAt(row,1)).toString();
-        String nama = (table.getModel().getValueAt(row,2)).toString();
-        String alamat = (table.getModel().getValueAt(row,3)).toString();
-        String noHP = (table.getModel().getValueAt(row,4)).toString();
-        MemberID=Integer.parseInt(MemberId);
-        txtNama.setText(nama);
-        txtAlamat.setText(alamat);
-        txtNoHP.setText(noHP);
-        System.out.println(MemberID);
+   
         
     }//GEN-LAST:event_tableMouseClicked
 
@@ -245,6 +239,20 @@ public class Member extends Form {
              Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
          }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void tableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseReleased
+        // TODO add your handling code here:
+        int row = table.getSelectedRow();
+        String MemberId = (table.getModel().getValueAt(row,1)).toString();
+        String nama = (table.getModel().getValueAt(row,2)).toString();
+        String alamat = (table.getModel().getValueAt(row,3)).toString();
+        String noHP = (table.getModel().getValueAt(row,4)).toString();
+        MemberID=Integer.parseInt(MemberId);
+        txtNama.setText(nama);
+        txtAlamat.setText(alamat);
+        txtNoHP.setText(noHP);
+        System.out.println(MemberID);
+    }//GEN-LAST:event_tableMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

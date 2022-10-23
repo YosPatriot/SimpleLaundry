@@ -2,7 +2,7 @@ package app.services;
 
 import app.configurations.koneksi;
 import app.model.ModelDashboard;
-import app.model.ModelMember;
+import app.model.ModelCustomer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,7 +46,7 @@ public class ServiceMember {
             System.err.println(e);
         } 
     }
-    public void addMember(ModelMember data)throws SQLException{
+    public void add(ModelCustomer data)throws SQLException{
         try{
            sql= "INSERT INTO Customer (Nama, Alamat, NoHP,Keterangan) values (?,?,?,'Member')";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -65,7 +65,7 @@ public class ServiceMember {
             System.err.println(e);
         }
     }
-    public void deleteMember(int MemberId){
+    public void delete(int MemberId){
         try{
             sql="DELETE FROM Customer WHERE IdCustomer = "+MemberId+"";
             pst = CC.prepareStatement(sql);
@@ -75,7 +75,7 @@ public class ServiceMember {
             System.err.println(ex);
         }
     }
-    public void updateMember(ModelMember data, int MemberID)throws SQLException{
+    public void update(ModelCustomer data, int MemberID)throws SQLException{
         try{
            sql= "Update Customer Set Nama=?, Alamat=?, NoHP=?, Keterangan=? WHERE IdCustomer="+MemberID+" limit 1";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

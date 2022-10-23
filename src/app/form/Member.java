@@ -6,7 +6,7 @@ package app.form;
 
 import app.component.Form;
 import app.configurations.koneksi;
-import app.model.ModelMember;
+import app.model.ModelCustomer;
 import app.services.ServiceMember;
 import java.sql.Connection;
 import java.sql.Date;
@@ -196,9 +196,9 @@ public class Member extends Form {
             String nama = txtNama.getText();
             String Alamat = txtAlamat.getText();
             String NoHP = txtNoHP.getText();
-            ModelMember rows = new ModelMember();
-            ModelMember data = new ModelMember(rows.getMemberID(),nama,Alamat,NoHP);
-            sm.addMember(data);
+            ModelCustomer rows = new ModelCustomer();
+            ModelCustomer data = new ModelCustomer(rows.getMemberID(),nama,Alamat,NoHP);
+            sm.add(data);
             sm.getData(table);
          } catch (SQLException ex) {
              Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
@@ -207,7 +207,7 @@ public class Member extends Form {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        sm.deleteMember(MemberID);
+        sm.delete(MemberID);
          try {
              sm.getData(table);
              //System.out.println(table.getSele);
@@ -227,9 +227,9 @@ public class Member extends Form {
          String nama = txtNama.getText();
             String Alamat = txtAlamat.getText();
             String NoHP = txtNoHP.getText();
-            ModelMember data = new ModelMember(MemberID,nama,Alamat,NoHP);
+            ModelCustomer data = new ModelCustomer(MemberID,nama,Alamat,NoHP);
          try {
-             sm.updateMember(data,MemberID);
+             sm.update(data,MemberID);
          } catch (SQLException ex) {
              Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
          }

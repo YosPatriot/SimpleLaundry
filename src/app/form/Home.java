@@ -7,7 +7,7 @@ package app.form;
 import app.component.Form;
 import app.configurations.koneksi;
 import app.model.ModelDashboard;
-import app.services.dashboard;
+import app.services.ServiceDashboard;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -49,8 +49,8 @@ public class Home extends Form {
        model.addColumn("Status");
         try{
             stt=CC.createStatement();
-            rs = stt.executeQuery("SELECT * FROM pemesanan INNER JOIN customer ON customer.IdCustomer = pemesanan.IdCustomer"
-                    + " INNER JOIN jeniscuci ON jeniscuci.IdJenisCuci = pemesanan.IdJenisCuci");
+            rs = stt.executeQuery("SELECT * FROM Cucian INNER JOIN customer ON customer.IdCustomer = Cucian.IdCustomer"
+                    + " INNER JOIN jeniscuci ON jeniscuci.IdJenisCuci = Cucian.IdJenisCuci");
             int no =0;
               while(rs.next()){
                 no++;
@@ -81,7 +81,7 @@ public class Home extends Form {
     private void init(){
          try{
             stt=CC.createStatement();
-            sql = "SELECT COUNT(IdPemesanan) AS NumberOfProducts FROM pemesanan";
+            sql = "SELECT COUNT(IdCucian) AS NumberOfProducts FROM Cucian";
             rs = stt.executeQuery(sql);
             if(rs.next()){
                 txtPemesan.setText(rs.getString("NumberOfProducts"));
@@ -236,7 +236,7 @@ public class Home extends Form {
                         .addComponent(jLabel6)))
                 .addGap(18, 18, 18)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
         );
 
         roundPanel3.setBackground(new java.awt.Color(191, 80, 233));
@@ -261,7 +261,7 @@ public class Home extends Form {
             .addGroup(roundPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
                     .addComponent(txtPelanggan))
@@ -282,7 +282,7 @@ public class Home extends Form {
                         .addComponent(txtPelanggan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)))
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
             .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(roundPanel3Layout.createSequentialGroup()
                     .addGap(112, 112, 112)
@@ -322,13 +322,13 @@ public class Home extends Form {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 418, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 417, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                                .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
-                                .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)))
+                                .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
-                        .addComponent(roundPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 267, Short.MAX_VALUE)))
+                        .addComponent(roundPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)))
                 .addGap(36, 36, 36))
         );
         layout.setVerticalGroup(

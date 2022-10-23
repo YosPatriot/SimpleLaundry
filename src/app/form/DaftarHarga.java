@@ -32,7 +32,7 @@ public class DaftarHarga extends Form {
         String jenis = txtJenis.getText();
         int harga = Integer.parseInt(txtHarga.getText());
         int id=0;
-        sd.addHarga(new ModelDaftarHarga(id,jenis,harga));
+        sd.add(new ModelDaftarHarga(id,jenis,harga));
        }catch(NumberFormatException e){
            JOptionPane.showMessageDialog(null, "Input Harga tidak sesuai !!");
        }
@@ -41,7 +41,7 @@ public class DaftarHarga extends Form {
         try{
         String jenis = txtJenis.getText();
         int harga = Integer.parseInt(txtHarga.getText());
-        sd.updateHarga(new ModelDaftarHarga(idHarga,jenis,harga));
+        sd.update(new ModelDaftarHarga(idHarga,jenis,harga));
         }catch(NumberFormatException e){
             JOptionPane.showMessageDialog(null, "Input Harga tidak sesuai !!");
         }
@@ -184,7 +184,7 @@ public class DaftarHarga extends Form {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        sd.deleteHarga(idHarga);
+        sd.delete(idHarga);
         try {
             sd.getData(table1);
         } catch (SQLException ex) {

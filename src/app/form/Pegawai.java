@@ -23,7 +23,7 @@ public class Pegawai extends Form {
         String email = txtEmail.getText();
         String jabatan = txtJabatan.getText();
         int ID = 0;
-        sp.addPegawai(new ModelPegawai(ID,nama,alamat,noHP,email,jabatan));
+        sp.add(new ModelPegawai(ID,nama,alamat,noHP,email,jabatan));
     }
     private void updatePegawai() throws SQLException{
         String nama = txtNama.getText();
@@ -31,7 +31,7 @@ public class Pegawai extends Form {
         String noHP = txtNoHP.getText();
         String email = txtEmail.getText();
         String jabatan = txtJabatan.getText();
-        sp.updatePegawai(new ModelPegawai(pegawaiID,nama,alamat,noHP,email,jabatan));
+        sp.update(new ModelPegawai(pegawaiID,nama,alamat,noHP,email,jabatan));
     }
 
     @SuppressWarnings("unchecked")
@@ -236,7 +236,7 @@ public class Pegawai extends Form {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try {
-            sp.deletePegawai(pegawaiID);
+            sp.delete(pegawaiID);
             sp.getData(table);
         } catch (SQLException ex) {
             Logger.getLogger(Pegawai.class.getName()).log(Level.SEVERE, null, ex);

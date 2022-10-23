@@ -18,7 +18,7 @@ public class Login extends javax.swing.JFrame {
 ////    Connection CC = new koneksi().connect();
 //    PreparedStatement pst = null;
 //    public Statement stt;
-    app.services.login log = new app.services.login();
+    app.services.ServiceLogin log = new app.services.ServiceLogin();
     public Login() {
         initComponents();
         log.checkConnection();

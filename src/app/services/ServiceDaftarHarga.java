@@ -2,7 +2,7 @@ package app.services;
 
 import app.configurations.koneksi;
 import app.model.ModelDaftarHarga;
-import app.model.ModelMember;
+import app.model.ModelCustomer;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,7 +14,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class ServiceDaftarHarga {
-      ResultSet rs = null;
+    ResultSet rs = null;
     Connection CC = new koneksi().connect();;
     PreparedStatement pst = null;
     Statement stt;
@@ -22,7 +22,7 @@ public class ServiceDaftarHarga {
     public void getData(JTable table) throws SQLException{
        DefaultTableModel model = new DefaultTableModel();
        model.addColumn("No");
-       model.addColumn("Kode Jenis Cucian");
+       model.addColumn("ID Jenis Cucian");
        model.addColumn("Jenis Cucian");
        model.addColumn("Harga Berat/Meter/Qty");
        try{
@@ -41,7 +41,7 @@ public class ServiceDaftarHarga {
             System.err.println(e);
         } 
     }
-    public void addHarga(ModelDaftarHarga data)throws SQLException{
+    public void add(ModelDaftarHarga data)throws SQLException{
         try{
            sql= "INSERT INTO jeniscuci (JenisCuci,Harga) values (?,?)";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -59,7 +59,7 @@ public class ServiceDaftarHarga {
             System.err.println(e);
         }
     }
-    public void deleteHarga(int idHarga){
+    public void delete(int idHarga){
         try{
             sql="DELETE FROM jeniscuci WHERE IdJenisCuci = "+idHarga+"";
             pst = CC.prepareStatement(sql);
@@ -69,7 +69,7 @@ public class ServiceDaftarHarga {
             System.err.println(ex);
         }
     }
-    public void updateHarga(ModelDaftarHarga data)throws SQLException{
+    public void update(ModelDaftarHarga data)throws SQLException{
         try{
            sql= "Update jeniscuci Set JenisCuci=?, Harga=? WHERE IdJenisCuci="+data.getIdJenis()+" limit 1";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

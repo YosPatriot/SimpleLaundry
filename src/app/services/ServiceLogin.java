@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import app.main.Dashboard;
 
 
-public class login {
+public class ServiceLogin {
     ResultSet rs = null;
     Connection CC = new koneksi().connect();;
     PreparedStatement pst = null;

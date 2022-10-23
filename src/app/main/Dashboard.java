@@ -3,7 +3,7 @@ package app.main;
 
 import app.form.DaftarHarga;
 import app.form.Home;
-import app.form.Transaksi;
+import app.form.DaftarCucian;
 import app.form.Member;
 import app.form.Pegawai;
 import app.menu.EventMenu;
@@ -34,7 +34,11 @@ public class Dashboard extends javax.swing.JFrame {
                         Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }else if(index == 2){
-                    mainBody1.displayForm(new Transaksi(), "Daftar Transaksi");
+                    try {
+                        mainBody1.displayForm(new DaftarCucian(), "Daftar Cucian");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }else if (index==3){ 
                     try {
                         mainBody1.displayForm(new Pegawai(), "Pegawai");

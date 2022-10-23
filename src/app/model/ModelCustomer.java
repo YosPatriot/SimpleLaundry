@@ -1,6 +1,6 @@
 package app.model;
 
-public class ModelMember {
+public class ModelCustomer {
 
     /**
      * @return the MemberID
@@ -34,25 +34,16 @@ public class ModelMember {
         this.noHP = noHP;
     }
 
-    public int getKodeMember() {
-        return kodeMember;
-    }
-
-    public void setKodeMember(int kodeMember) {
-        this.kodeMember = kodeMember;
-    }
     private int MemberID;
     private String nama;
     private String alamat;
     private String noHP;
-    private int kodeMember;
-    public ModelMember(int MemberID,String nama, String alamat, String noHP){ 
+    public ModelCustomer(int MemberID,String nama, String alamat, String noHP){ 
         this.MemberID = MemberID;
         this.nama = nama;
         this.alamat = alamat;
         this.noHP = noHP;
-        this.kodeMember = kodeMember;
     }
-    public ModelMember(){
+    public ModelCustomer(){
     }
 }

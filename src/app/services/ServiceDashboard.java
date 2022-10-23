@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class dashboard {
+public class ServiceDashboard {
     ResultSet rs = null;
     Connection CC = new koneksi().connect();;
     PreparedStatement pst = null;
@@ -22,8 +22,8 @@ public class dashboard {
         List<ModelDashboard> list = new ArrayList<>();
        try{
             stt=CC.createStatement();
-            rs = stt.executeQuery("SELECT * FROM pemesanan INNER JOIN customer ON customer.IdCustomer = pemesanan.IdCustomer"
-                    + " INNER JOIN jeniscuci ON jeniscuci.IdJenisCuci = pemesanan.IdJenisCuci");
+            rs = stt.executeQuery("SELECT * FROM cucian INNER JOIN customer ON customer.IdCustomer = cucian.IdCustomer"
+                    + " INNER JOIN jeniscuci ON jeniscuci.IdJenisCuci = cucian.IdJenisCuci");
             int no =0;
             while(rs.next()){
             no++;

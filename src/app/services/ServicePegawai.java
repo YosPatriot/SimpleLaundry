@@ -44,7 +44,7 @@ public class ServicePegawai {
             System.err.println(e);
         } 
     }
-    public void addPegawai(ModelPegawai data)throws SQLException{
+    public void add(ModelPegawai data)throws SQLException{
         try{
            sql= "INSERT INTO karyawan (Nama, Alamat, NoHP,Email,Jabatan) values (?,?,?,?,?)";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -65,7 +65,7 @@ public class ServicePegawai {
             System.err.println(e);
         }
     }
-    public void updatePegawai(ModelPegawai data)throws SQLException{
+    public void update(ModelPegawai data)throws SQLException{
         try{
            sql= "Update karyawan Set Nama=?, Alamat=?, NoHP=?, Email=?, Jabatan=? WHERE IdKaryawan="+data.getPegawaiID()+" limit 1";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -81,7 +81,7 @@ public class ServicePegawai {
             System.err.println(e);
         }
     }
-    public void deletePegawai(int pegawaiID){
+    public void delete(int pegawaiID){
         try{
             sql="DELETE FROM karyawan WHERE IdKaryawan = "+pegawaiID+"";
             pst = CC.prepareStatement(sql);

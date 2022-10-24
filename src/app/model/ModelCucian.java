@@ -5,6 +5,20 @@ import java.sql.Date;
 public class ModelCucian {
 
     /**
+     * @return the transaksi
+     */
+    public ModelTransaksi getTransaksi() {
+        return transaksi;
+    }
+
+    /**
+     * @param transaksi the transaksi to set
+     */
+    public void setTransaksi(ModelTransaksi transaksi) {
+        this.transaksi = transaksi;
+    }
+
+    /**
      * @return the estimasi
      */
     public Date getEstimasi() {
@@ -67,14 +81,12 @@ public class ModelCucian {
     public void setStatus(String status) {
         this.status = status;
     }
-    public ModelCucian(int cucianID, ModelCustomer customer, String jenisCucian, Date tglMasuk,Date estimasi,int berat, String status){
+    public ModelCucian(int cucianID, ModelCustomer customer, String jenisCucian, int berat, ModelTransaksi transaksi){
        this.cucianID = cucianID;
        this.customer = customer;
        this.jenisCucian = jenisCucian;
-       this.tglMasuk = tglMasuk;
-       this.estimasi = estimasi;
        this.berat = berat;
-       this.status = status;
+       this.transaksi=transaksi;
     }
     public ModelCucian(){
     }
@@ -85,6 +97,7 @@ public class ModelCucian {
     private Date estimasi;
     private int berat;
     private String status;
+    private ModelTransaksi transaksi;
     
     
 }

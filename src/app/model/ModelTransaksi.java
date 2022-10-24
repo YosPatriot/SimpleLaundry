@@ -82,5 +82,10 @@ public class ModelTransaksi {
         this.diskon = diskon;
         this.grandTotal = grandTotal;
     }
+    public ModelTransaksi(double subTotal,double diskon,double grandTotal){
+        this.subTotal = subTotal;
+        this.diskon = diskon;
+        this.grandTotal = grandTotal;
+    }
     public ModelTransaksi(){}
 }

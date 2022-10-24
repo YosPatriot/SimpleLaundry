@@ -20,6 +20,7 @@ public class ServiceMember {
     PreparedStatement pst = null;
     Statement stt;
     String sql;
+    ServiceCucian sc = new ServiceCucian();
     public void getData(JTable table) throws SQLException{
        DefaultTableModel model = new DefaultTableModel();
        model.addColumn("No");
@@ -46,21 +47,22 @@ public class ServiceMember {
             System.err.println(e);
         } 
     }
-    public void add(ModelCustomer data)throws SQLException{
+    public void add(ModelCustomer data,double diskon)throws SQLException{
         try{
            sql= "INSERT INTO Customer (Nama, Alamat, NoHP,Keterangan) values (?,?,?,'Member')";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             pst.setString(1, data.getNama());
             pst.setString(2, data.getAlamat());
             pst.setString(3, data.getNoHP());
+            pst.execute();
         rs = pst.getGeneratedKeys();
         rs.first();
-        pst.execute();
         int IdMember = rs.getInt(1);
         data.setMemberID(IdMember);
         System.out.println("Keys : "+IdMember);
         rs.close();
-        pst.close();   
+        pst.close();
+        sc.mt.setDiskon(diskon);
         }catch(SQLException e){
             System.err.println(e);
         }

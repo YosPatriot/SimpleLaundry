@@ -61,7 +61,7 @@ public class Home extends Form {
                 String jenis = rs.getString("JenisCuci");
                 String status = rs.getString("Status"); 
                 int harga = rs.getInt("Harga");
-                int qty = rs.getInt("Berat/Qty/Meter");
+                int qty = rs.getInt("Berat");
                 int pemasukan = harga*qty;
                 model.addRow(new Object[]{nama,alamat,noHp,tglMasuk,jenis,qty,pemasukan,status});
                 table.setModel(model);

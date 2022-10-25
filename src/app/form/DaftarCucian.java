@@ -31,17 +31,31 @@ public class DaftarCucian extends Form {
         //sc.setNominal(lblNominal, comboCucian.getSelectedItem().toString());
     }
     private void addCucian() throws SQLException{
+       if(sc.isMember()==true){ 
         String nama = txtNama.getText();
         String noHP = txtNoHP.getText();
         String alamat = txtAlamat.getText();
         String jenis = (String) comboCucian.getSelectedItem();
         int berat = Integer.parseInt(txtBerat.getText());
         int id=0;
-        double sub = Double.parseDouble(lblNominal.getText());
+        double sub = Double.parseDouble(lblTotal.getText());
         double diskon = sc.getDiskon();
-        double grandTotal = (sub*diskon)-sub;
+        double grandTotal = sub-(sub*diskon);
         ModelCucian mc = new ModelCucian();
         sc.add(new ModelCucian(id,new ModelCustomer(id,nama,alamat,noHP),jenis,berat, new ModelTransaksi(sub,diskon,grandTotal)));
+       }else{
+        String nama = txtNama.getText();
+        String noHP = txtNoHP.getText();
+        String alamat = txtAlamat.getText();
+        String jenis = (String) comboCucian.getSelectedItem();
+        int berat = Integer.parseInt(txtBerat.getText());
+        int id=0;
+        double sub = Double.parseDouble(lblTotal.getText());
+        double diskon = 0;
+        double grandTotal = Double.parseDouble(lblTotal.getText());
+        ModelCucian mc = new ModelCucian();
+        sc.add(new ModelCucian(id,new ModelCustomer(id,nama,alamat,noHP),jenis,berat, new ModelTransaksi(sub,diskon,grandTotal)));
+       }
     }
 
     @SuppressWarnings("unchecked")
@@ -332,11 +346,13 @@ public class DaftarCucian extends Form {
     private void radioSekarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioSekarangActionPerformed
         // TODO add your handling code here:
         radioNanti.setSelected(false);
+        sc.setStatusBayar(radioSekarang);
     }//GEN-LAST:event_radioSekarangActionPerformed
 
     private void radioNantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioNantiActionPerformed
         // TODO add your handling code here:
         radioSekarang.setSelected(false);
+        sc.setStatusBayar(radioNanti);
     }//GEN-LAST:event_radioNantiActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -345,6 +361,9 @@ public class DaftarCucian extends Form {
             sc.isMember(Integer.parseInt(txtMember.getText()), lblTotal);
             if(sc.isMember()==true){
                 JOptionPane.showMessageDialog(null, "Kode Member Benar");
+                txtNama.setText(sc.dataCustomer.getNama());
+                txtNoHP.setText(sc.dataCustomer.getNoHP());
+                txtAlamat.setText(sc.dataCustomer.getAlamat());
             }else{
                 JOptionPane.showMessageDialog(null, "Kode Member Salah");
             }

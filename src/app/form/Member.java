@@ -5,8 +5,10 @@
 package app.form;
 
 import app.component.Form;
+import app.configurations.config;
 import app.configurations.koneksi;
 import app.model.ModelCustomer;
+import app.model.ModelTransaksi;
 import app.services.ServiceCucian;
 import app.services.ServiceMember;
 import java.sql.Connection;
@@ -35,11 +37,13 @@ public class Member extends Form {
     PreparedStatement pst = null;
     Statement stt;
     String sql;
-    ServiceCucian sm = new ServiceCucian();
+    config con = new config();
+    ServiceMember sm = new ServiceMember();
     int MemberID;
     public Member() throws SQLException {
         initComponents();    
-        sm.getData(table);     
+        sm.getData(table);   
+        txtDiskon.setText(con.GetProp(lblDiskon.getText()));
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -59,7 +63,7 @@ public class Member extends Form {
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
-        jLabel1 = new javax.swing.JLabel();
+        lblDiskon = new javax.swing.JLabel();
         txtDiskon = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
 
@@ -123,7 +127,7 @@ public class Member extends Form {
         });
         jScrollPane1.setViewportView(table);
 
-        jLabel1.setText("Atur Diskon");
+        lblDiskon.setText("Atur Diskon");
 
         jButton4.setText("Simpan");
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -171,7 +175,7 @@ public class Member extends Form {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
+                                .addComponent(lblDiskon)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtDiskon, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -188,7 +192,7 @@ public class Member extends Form {
                     .addComponent(jLabel4))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
+                    .addComponent(lblDiskon)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtDiskon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jButton4)))
@@ -225,7 +229,7 @@ public class Member extends Form {
             ModelCustomer rows = new ModelCustomer();
             ModelCustomer data = new ModelCustomer(rows.getMemberID(),nama,Alamat,NoHP);
             double diskon = Double.parseDouble(txtDiskon.getText());
-            sm.add(data);
+            sm.add(data,diskon);
             sm.getData(table);
          } catch (SQLException ex) {
              Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
@@ -283,7 +287,13 @@ public class Member extends Form {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        
+        try{
+        double diskon = Double.parseDouble(txtDiskon.getText());
+        con.SaveProp(lblDiskon.getText(),txtDiskon.getText());
+        JOptionPane.showMessageDialog(null, "Berhasil Disimpan !");
+        }catch(NumberFormatException e){
+          JOptionPane.showMessageDialog(null, "Gagal Dismpan");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 
 
@@ -292,7 +302,6 @@ public class Member extends Form {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -300,6 +309,7 @@ public class Member extends Form {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JLabel lblDiskon;
     private javax.swing.JTable table;
     private javax.swing.JTextArea txtAlamat;
     private javax.swing.JTextField txtDiskon;

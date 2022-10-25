@@ -47,7 +47,7 @@ public class ServiceMember {
             System.err.println(e);
         } 
     }
-    public void add(ModelCustomer data,double diskon)throws SQLException{
+    public void add(ModelCustomer data, double diskon)throws SQLException{
         try{
            sql= "INSERT INTO Customer (Nama, Alamat, NoHP,Keterangan) values (?,?,?,'Member')";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);

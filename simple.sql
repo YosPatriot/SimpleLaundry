@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : db
+ Source Server         : localhost_33061
  Source Server Type    : MySQL
- Source Server Version : 100424
+ Source Server Version : 100414
  Source Host           : localhost:3306
  Source Schema         : simple
 
  Target Server Type    : MySQL
- Target Server Version : 100424
+ Target Server Version : 100414
  File Encoding         : 65001
 
- Date: 25/10/2022 12:25:55
+ Date: 25/10/2022 17:33:26
 */
 
 SET NAMES utf8mb4;
@@ -48,14 +48,12 @@ CREATE TABLE `cucian`  (
   `Berat` int NULL DEFAULT NULL,
   `Status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`IdCucian`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cucian
 -- ----------------------------
-INSERT INTO `cucian` VALUES (12, NULL, 1, '2022-10-24 21:43:05', '2022-10-27', NULL, 2, 'Menunggu Antrian');
-INSERT INTO `cucian` VALUES (13, NULL, 1, '2022-10-24 21:50:57', '2022-10-27', NULL, 2, 'Menunggu Antrian');
-INSERT INTO `cucian` VALUES (14, NULL, 1, '2022-10-24 22:24:17', '2022-10-27', NULL, 2, 'Menunggu Antrian');
+INSERT INTO `cucian` VALUES (26, 10028, 2, '2022-10-25 17:29:08', '2022-10-28', NULL, 2, 'Menunggu Antrian');
 
 -- ----------------------------
 -- Table structure for customer
@@ -68,18 +66,12 @@ CREATE TABLE `customer`  (
   `NoHP` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `Keterangan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`IdCustomer`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10010 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10029 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of customer
 -- ----------------------------
-INSERT INTO `customer` VALUES (10000, 'fasdasdasdssds', 'ffasff', 'ffdsd', 'Member');
-INSERT INTO `customer` VALUES (10001, 'gasdf', 'sdf', 'aasd', 'Member');
-INSERT INTO `customer` VALUES (10005, '123', '23123', '232', 'Member');
-INSERT INTO `customer` VALUES (10006, 'asd', 'as', 'd123', 'Member');
-INSERT INTO `customer` VALUES (10007, '123', '23123', '223', 'Member');
-INSERT INTO `customer` VALUES (10008, 'asd', 'as123', '231', 'Member');
-INSERT INTO `customer` VALUES (10009, 'dds3', '23', '084', 'Member');
+INSERT INTO `customer` VALUES (10028, 'sdasd', 'asd', 'ggasd', 'Non-Member');
 
 -- ----------------------------
 -- Table structure for jeniscuci
@@ -90,13 +82,14 @@ CREATE TABLE `jeniscuci`  (
   `JenisCuci` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `Harga` int NULL DEFAULT NULL,
   PRIMARY KEY (`IdJenisCuci`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jeniscuci
 -- ----------------------------
 INSERT INTO `jeniscuci` VALUES (1, 'Jas', 20000);
 INSERT INTO `jeniscuci` VALUES (2, 'Karpet', 10000);
+INSERT INTO `jeniscuci` VALUES (3, 'Baju', 2333);
 
 -- ----------------------------
 -- Table structure for karyawan
@@ -125,19 +118,18 @@ INSERT INTO `karyawan` VALUES (1003, '2222', '222', '1123', '1222', '332', NULL)
 -- ----------------------------
 DROP TABLE IF EXISTS `transaksi`;
 CREATE TABLE `transaksi`  (
-  `IdTrx` int NOT NULL,
+  `IdTrx` int NOT NULL AUTO_INCREMENT,
   `IdCucian` int NULL DEFAULT NULL,
   `Subtotal` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `Diskon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `GrandTotal` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `Tanggal` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `Tanggal` datetime NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
   `StatusTransaksi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`IdTrx`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of transaksi
 -- ----------------------------
-INSERT INTO `transaksi` VALUES (1, 1, '50000', '10000', '40000', '2022-10-23 14:05:51', 'Belum Lunas');
 
 SET FOREIGN_KEY_CHECKS = 1;

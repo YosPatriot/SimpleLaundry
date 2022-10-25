@@ -35,4 +35,17 @@ public class config {
         }
         return value;
     }
+    public Double getDiskon(){
+        String value = "Atur Diskon";
+        double result=0;
+    try
+        {
+           prop.load(new FileInputStream("src/config.app"));
+           value=prop.getProperty(value);
+           result = Double.parseDouble(value);
+        }catch(IOException e){
+        
+        }
+        return result;
+    }
 }

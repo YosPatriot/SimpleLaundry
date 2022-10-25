@@ -1,5 +1,6 @@
-#Fri Sep 09 15:09:11 WIB 2022
+#Tue Oct 25 16:04:01 ICT 2022
+Username\ \:=root
+Atur\ Diskon=0.05
+Database\ \:=simple
 Password\ \:=
 IP\ Server\ \ \:=localhost
-Database\ \:=simple
-Username\ \:=root

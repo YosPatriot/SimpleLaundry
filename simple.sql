@@ -11,7 +11,7 @@
  Target Server Version : 100424
  File Encoding         : 65001
 
- Date: 24/10/2022 00:53:08
+ Date: 25/10/2022 12:25:55
 */
 
 SET NAMES utf8mb4;
@@ -42,18 +42,20 @@ CREATE TABLE `cucian`  (
   `IdCucian` int NOT NULL AUTO_INCREMENT,
   `IdCustomer` int NULL DEFAULT NULL,
   `IdJenisCuci` int NULL DEFAULT NULL,
-  `Tgl_Masuk` datetime NULL DEFAULT NULL,
+  `Tgl_Masuk` datetime NULL DEFAULT current_timestamp,
   `Estimasi` date NULL DEFAULT NULL,
-  `Tgl_Keluar` datetime NULL DEFAULT NULL,
-  `Berat/Qty/Meter` int NULL DEFAULT NULL,
+  `Tgl_Keluar` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `Berat` int NULL DEFAULT NULL,
   `Status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`IdCucian`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cucian
 -- ----------------------------
-INSERT INTO `cucian` VALUES (1, 10000, 1, '2022-10-19 13:10:28', '2022-10-25', '2022-10-26 13:10:35', 1, 'Menunggu Antrian');
+INSERT INTO `cucian` VALUES (12, NULL, 1, '2022-10-24 21:43:05', '2022-10-27', NULL, 2, 'Menunggu Antrian');
+INSERT INTO `cucian` VALUES (13, NULL, 1, '2022-10-24 21:50:57', '2022-10-27', NULL, 2, 'Menunggu Antrian');
+INSERT INTO `cucian` VALUES (14, NULL, 1, '2022-10-24 22:24:17', '2022-10-27', NULL, 2, 'Menunggu Antrian');
 
 -- ----------------------------
 -- Table structure for customer
@@ -66,13 +68,18 @@ CREATE TABLE `customer`  (
   `NoHP` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `Keterangan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`IdCustomer`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10005 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10010 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of customer
 -- ----------------------------
 INSERT INTO `customer` VALUES (10000, 'fasdasdasdssds', 'ffasff', 'ffdsd', 'Member');
 INSERT INTO `customer` VALUES (10001, 'gasdf', 'sdf', 'aasd', 'Member');
+INSERT INTO `customer` VALUES (10005, '123', '23123', '232', 'Member');
+INSERT INTO `customer` VALUES (10006, 'asd', 'as', 'd123', 'Member');
+INSERT INTO `customer` VALUES (10007, '123', '23123', '223', 'Member');
+INSERT INTO `customer` VALUES (10008, 'asd', 'as123', '231', 'Member');
+INSERT INTO `customer` VALUES (10009, 'dds3', '23', '084', 'Member');
 
 -- ----------------------------
 -- Table structure for jeniscuci

@@ -4,6 +4,7 @@ package app.main;
 import app.form.DaftarHarga;
 import app.form.Home;
 import app.form.DaftarCucian;
+import app.form.DaftarTransaksi;
 import app.form.Member;
 import app.form.Pegawai;
 import app.menu.EventMenu;
@@ -41,17 +42,24 @@ public class Dashboard extends javax.swing.JFrame {
                     }
                 }else if (index==3){ 
                     try {
+                        mainBody1.displayForm(new DaftarTransaksi(), "Daftar Transaksi");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                else if (index==4){ 
+                    try {
                         mainBody1.displayForm(new Pegawai(), "Pegawai");
                     } catch (SQLException ex) {
                         Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }else if (index==4){ 
+                }else if (index==5){ 
                     try {
                         mainBody1.displayForm(new Member(), "Member");
                     } catch (SQLException ex) {
                         Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }else if(index == 5){
+                }else if(index == 6){
                     Login a = new Login();
                     a.setVisible(true);
                     UserSession.setUserLogin("");

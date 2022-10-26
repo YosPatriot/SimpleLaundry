@@ -12,32 +12,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class ServiceCucian {
 
-    /**
-     * @return the statusBayar
-     */
-    public JRadioButton getStatusBayar() {
-        return statusBayar;
-    }
-
-    /**
-     * @param statusBayar the statusBayar to set
-     */
-    public void setStatusBayar(JRadioButton statusBayar) {
-        this.statusBayar = statusBayar;
-    }
 
     public double getDiskon() {
         return diskon;
@@ -59,13 +41,24 @@ public class ServiceCucian {
     Statement stt;
     String sql; 
     private boolean Member;
-    private JRadioButton statusBayar;
     private double diskon;
     public ModelCustomer dataCustomer;
+    public ModelCucian dataCucian = new ModelCucian();
+    public int berat;
     config con = new config();
     public ModelTransaksi mt = new ModelTransaksi();
      public void getData(JTable table) throws SQLException{
-       DefaultTableModel model = (DefaultTableModel) table.getModel();
+       DefaultTableModel model = new DefaultTableModel();
+       model.addColumn("ID Cucian");
+       model.addColumn("Nama");
+       model.addColumn("Alamat");
+       model.addColumn("No HP");
+       model.addColumn("Customer");
+       model.addColumn("Jenis Cucian");
+       model.addColumn("Tanggal Masuk");
+       model.addColumn("Estimasi");
+       model.addColumn("Berat/Meter/Qty");
+       model.addColumn("Status");
        try{
             stt=CC.createStatement();
             rs = stt.executeQuery("SELECT * FROM cucian INNER JOIN customer ON customer.IdCustomer = cucian.IdCustomer INNER JOIN jeniscuci ON jeniscuci.IdJenisCuci = cucian.IdJenisCuci "
@@ -94,18 +87,21 @@ public class ServiceCucian {
     public void add(ModelCucian data)throws SQLException{
         if(isMember()==true){
         try{
-           sql= "INSERT INTO Cucian (IdCustomer,IdJenisCuci,Estimasi,Berat,Status) values ((SELECT IdCustomer FROM Customer WHERE Nama='"+data.getCustomer().getNama()+"'),"
+           sql= "INSERT INTO Cucian (IdCustomer,IdJenisCuci,Estimasi,Berat,Status) values ((SELECT IdCustomer FROM Customer WHERE Nama='"+data.getCustomer().getNama()+"' AND Alamat='"+data.getCustomer().getAlamat()+"' AND NoHP='"+data.getCustomer().getNoHP()+"'),"
                    + "(SELECT IdJenisCuci FROM jeniscuci WHERE JenisCuci='"+data.getJenisCucian()+"'),DATE_ADD(CURDATE(),INTERVAL 3 DAY),"+data.getBerat()+",'Menunggu Antrian')";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pst.execute();
         rs = pst.getGeneratedKeys();
         rs.first();
         int cucianID = rs.getInt(1);
+        berat = data.getBerat();
         data.setCucianID(cucianID);
+        dataCucian.setBerat(berat);
+        //System.out.println("berat "+berat);
         System.out.println("Keys : "+cucianID);
+        addTransaksi(data);
         rs.close();
         pst.close();
-        addTransaksi(data);
         }catch(SQLException e){
             System.err.println(e);
         }
@@ -118,37 +114,32 @@ public class ServiceCucian {
         pst.execute();
         rs = pst.getGeneratedKeys();
         rs.first();
-        int cucianID = rs.getInt(1);
+        int cucianID = rs.getInt(1);                                                                                                        
         data.setCucianID(cucianID);
         System.out.println("Keys : "+cucianID);
+        addTransaksi(data);
         rs.close();
         pst.close();   
-        addTransaksi(data);
-        }catch(SQLException e){
+         }catch(SQLException e){
             System.err.println(e);
         }
        }
     }
     public void addCustomer(ModelCucian data) throws SQLException{
-        String sql = "INSERT INTO customer (Nama, Alamat, NoHP, Keterangan) VALUES (?,?,?,?)";
+        String sql = "INSERT INTO customer (Nama, Alamat, NoHP, Keterangan) SELECT * FROM (SELECT '"+data.getCustomer().getNama()+"', '"+data.getCustomer().getAlamat()+"', '"+data.getCustomer().getNoHP()+"', 'Non-Member') AS tmp "
+                + "WHERE NOT EXISTS ( SELECT Nama,Alamat,NoHP,Keterangan FROM customer WHERE "
+                + "Nama = '"+data.getCustomer().getNama()+"' AND Alamat = '"+data.getCustomer().getAlamat()+"' AND NoHP='"+data.getCustomer().getNoHP()+"' AND Keterangan='Non-Member' ) LIMIT 1;";
         pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pst.setString(1, data.getCustomer().getNama());
-            pst.setString(2, data.getCustomer().getAlamat());
-            pst.setString(3, data.getCustomer().getNoHP());
-            pst.setString(4, "Non-Member");
         pst.execute();
         rs = pst.getGeneratedKeys();
         rs.first();
-        int CustomerId = rs.getInt(1);
-        data.getCustomer().setMemberID(CustomerId);
-        System.out.println("Keys : "+CustomerId);
         rs.close();
         pst.close();
     }
     public void addTransaksi(ModelCucian data){
-        try{      
-         String status = getStatusBayar().getText();
-          if(status.equals("Bayar Sekarang")){
+        try{ 
+            System.out.println(data.getTransaksi().getStatus());
+          if(data.getTransaksi().getStatus().equals("Bayar Sekarang")){
               String result="Lunas";
                sql= "INSERT INTO transaksi (IdCucian, Subtotal, Diskon, GrandTotal,StatusTransaksi) values (?,?,?,?,?)";
             pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -157,7 +148,21 @@ public class ServiceCucian {
             pst.setDouble(3, data.getTransaksi().getDiskon());
             pst.setDouble(4, data.getTransaksi().getGrandTotal());
             pst.setString(5, result);
-          }else if(status.equals("Bayar Nanti")){
+              System.out.println(data.getCucianID());
+              System.out.println(data.getTransaksi().getSubTotal());
+            pst.execute();       
+            rs = pst.getGeneratedKeys();
+            rs.first();
+            int transaksiID = rs.getInt(1);
+            data.getTransaksi().setTransaksiID(transaksiID);
+            System.out.println("Keys : "+transaksiID);
+              System.out.println("");
+              System.out.println("Sub total ="+data.getTransaksi().getSubTotal());
+              System.out.println("diskon total ="+data.getTransaksi().getDiskon());
+              System.out.println("grand total ="+data.getTransaksi().getGrandTotal());
+            rs.close();
+            pst.close();   
+          }else if(data.getTransaksi().getStatus().equals("Bayar Nanti")){
               String result="Belum Lunas";
                sql= "INSERT INTO transaksi (IdCucian, Subtotal, Diskon, GrandTotal,StatusTransaksi) values (?,?,?,?,?)";
             pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -166,15 +171,16 @@ public class ServiceCucian {
             pst.setDouble(3, data.getTransaksi().getDiskon());
             pst.setDouble(4, data.getTransaksi().getGrandTotal());
             pst.setString(5, result);
+            pst.execute();
+            rs = pst.getGeneratedKeys();
+            rs.first();
+            int transaksiID = rs.getInt(1);
+            data.getTransaksi().setTransaksiID(transaksiID);
+            System.out.println("Keys : "+transaksiID);
+            rs.close();
+            pst.close();   
           } 
-        pst.execute();
-        rs = pst.getGeneratedKeys();
-        rs.first();
-        int transaksiID = rs.getInt(1);
-        data.getTransaksi().setTransaksiID(transaksiID);
-        System.out.println("Keys : "+transaksiID);
-        rs.close();
-        pst.close();   
+       
         }catch(SQLException e){
             System.err.println(e);
         }
@@ -205,6 +211,8 @@ public class ServiceCucian {
         } 
     }
     public void isMember(int kode, JLabel nominal) throws SQLException{
+        int berat = dataCucian.getBerat();
+        System.out.println(berat);
         try{
             stt=CC.createStatement();
             rs = stt.executeQuery("SELECT * FROM Customer WHERE IdCustomer ="+kode+"");
@@ -215,16 +223,12 @@ public class ServiceCucian {
                 String nama = rs.getString("Nama");
                 String alamat = rs.getString("Alamat");
                 String noHP = rs.getString("NoHP");
-                mt.setGrandTotal(mt.getSubTotal()-(mt.getSubTotal()*con.getDiskon()));
-                nominal.setText(String.valueOf((double) mt.getGrandTotal()));
-                System.out.println(con.getDiskon());
                 dataCustomer = new ModelCustomer(kode,nama,alamat,noHP);
                }else if (status.equals("Non-Member")){
                 String nama = rs.getString("Nama");
                 String alamat = rs.getString("Alamat");
                 String noHP = rs.getString("NoHP");
                 setMember(false);
-                nominal.setText(String.valueOf((double) mt.getSubTotal()));
                 dataCustomer = new ModelCustomer(kode,nama,alamat,noHP);
                }           
             }else{

@@ -58,9 +58,10 @@ public class Menu extends javax.swing.JPanel {
         addMenu("Beranda", null, 0);
         addMenu("Daftar Harga",null, 1);
         addMenu("Daftar Cucian", null, 2);
-        addMenu("Pegawai",null,3);
-        addMenu("Member", null, 4);
-        addMenu("Logout", null, 5);
+        addMenu("Daftar Transaksi", null, 3);
+        addMenu("Pegawai",null,4);
+        addMenu("Member", null, 5);
+        addMenu("Logout", null, 6);
         
         //  add more menu here
         menu.repaint();

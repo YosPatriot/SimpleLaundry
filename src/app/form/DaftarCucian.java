@@ -2,22 +2,23 @@
 package app.form;
 
 import app.component.Form;
+import app.configurations.config;
 import app.model.ModelCucian;
 import app.model.ModelCustomer;
 import app.model.ModelTransaksi;
 import app.services.ServiceCucian;
-import java.awt.event.ItemEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class DaftarCucian extends Form {
     ServiceCucian sc= new ServiceCucian();
+    config con = new config();
+    double sub;
+    double grand;
+    public String statusBayar = "Bayar Sekarang";
+    public int id;
     public DaftarCucian() throws SQLException {
         initComponents();
         radioSekarang.setSelected(true);
@@ -26,9 +27,6 @@ public class DaftarCucian extends Form {
         jButton4.setVisible(false);
         sc.getData(table1);
         sc.getJenis(comboCucian);
-        //sc.setNominal(comboCucian.getSelectedItem().toString());
-
-        //sc.setNominal(lblNominal, comboCucian.getSelectedItem().toString());
     }
     private void addCucian() throws SQLException{
        if(sc.isMember()==true){ 
@@ -38,11 +36,17 @@ public class DaftarCucian extends Form {
         String jenis = (String) comboCucian.getSelectedItem();
         int berat = Integer.parseInt(txtBerat.getText());
         int id=0;
-        double sub = Double.parseDouble(lblTotal.getText());
-        double diskon = sc.getDiskon();
-        double grandTotal = sub-(sub*diskon);
-        ModelCucian mc = new ModelCucian();
-        sc.add(new ModelCucian(id,new ModelCustomer(id,nama,alamat,noHP),jenis,berat, new ModelTransaksi(sub,diskon,grandTotal)));
+        int harga = Integer.parseInt(lblNominal.getText());
+        double sub = harga*berat;
+        double diskon = sub*con.getDiskon();
+        double grandTotal = sub-(diskon);
+           System.out.println("sub cucian = " +sub);
+           System.out.println("diskon cucian" +diskon);
+           System.out.println("grand = " +grandTotal);
+        ModelCustomer dataCustomer = new ModelCustomer(id,nama,alamat,noHP);
+        ModelTransaksi dataTransaksi = new ModelTransaksi(sub,diskon,grandTotal,statusBayar);
+        ModelCucian dataCucian = new ModelCucian(id,dataCustomer,jenis,Integer.parseInt(txtBerat.getText()),dataTransaksi);
+        sc.add(dataCucian);
        }else{
         String nama = txtNama.getText();
         String noHP = txtNoHP.getText();
@@ -53,8 +57,10 @@ public class DaftarCucian extends Form {
         double sub = Double.parseDouble(lblTotal.getText());
         double diskon = 0;
         double grandTotal = Double.parseDouble(lblTotal.getText());
-        ModelCucian mc = new ModelCucian();
-        sc.add(new ModelCucian(id,new ModelCustomer(id,nama,alamat,noHP),jenis,berat, new ModelTransaksi(sub,diskon,grandTotal)));
+        ModelCustomer dataCustomer = new ModelCustomer(id,nama,alamat,noHP);
+        ModelTransaksi dataTransaksi = new ModelTransaksi(sub,diskon,grandTotal,statusBayar);
+        ModelCucian dataCucian = new ModelCucian(id,dataCustomer,jenis,Integer.parseInt(txtBerat.getText()),dataTransaksi);
+        sc.add(dataCucian);
        }
     }
 
@@ -100,6 +106,11 @@ public class DaftarCucian extends Form {
                 "ID Cucian", "Nama", "Alamat", "No HP", "Tipe Customer", "Jenis Cucian", "Tanggal Masuk", "Estimasi", "Berat/Meter/Qty", "Status"
             }
         ));
+        table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                table1MouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(table1);
         if (table1.getColumnModel().getColumnCount() > 0) {
             table1.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -129,12 +140,6 @@ public class DaftarCucian extends Form {
         });
 
         jLabel5.setText("Berat/Meter/Qty");
-
-        txtBerat.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                //txtBeratKeyReleased(evt);
-            }
-        });
 
         jLabel6.setText("Total Bayar");
 
@@ -346,13 +351,13 @@ public class DaftarCucian extends Form {
     private void radioSekarangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioSekarangActionPerformed
         // TODO add your handling code here:
         radioNanti.setSelected(false);
-        sc.setStatusBayar(radioSekarang);
+        statusBayar = radioSekarang.getText();
     }//GEN-LAST:event_radioSekarangActionPerformed
 
     private void radioNantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_radioNantiActionPerformed
         // TODO add your handling code here:
         radioSekarang.setSelected(false);
-        sc.setStatusBayar(radioNanti);
+        statusBayar = radioNanti.getText();
     }//GEN-LAST:event_radioNantiActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -364,7 +369,16 @@ public class DaftarCucian extends Form {
                 txtNama.setText(sc.dataCustomer.getNama());
                 txtNoHP.setText(sc.dataCustomer.getNoHP());
                 txtAlamat.setText(sc.dataCustomer.getAlamat());
+                    int harga = Integer.parseInt(lblNominal.getText());
+                    int qty = Integer.parseInt(txtBerat.getText());
+                    int sub = harga*qty;
+                    Double total = (sub)-(con.getDiskon()*sub);
+                lblTotal.setText(String.valueOf(total));
             }else{
+                    int harga = Integer.parseInt(lblNominal.getText());
+                    int qty = Integer.parseInt(txtBerat.getText());
+                    int total = harga*qty;
+                    lblTotal.setText(String.valueOf(total));
                 JOptionPane.showMessageDialog(null, "Kode Member Salah");
             }
         } catch (SQLException ex) {
@@ -390,6 +404,10 @@ public class DaftarCucian extends Form {
         int total = harga*qty;
         lblTotal.setText(String.valueOf(total));
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void table1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_table1MouseReleased
 
 
 

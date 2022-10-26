@@ -151,6 +151,11 @@ public class DaftarCucian extends Form {
         });
 
         jButton2.setText("Edit Cucian");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Hapus");
 
@@ -407,7 +412,23 @@ public class DaftarCucian extends Form {
 
     private void table1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseReleased
         // TODO add your handling code here:
+        int row = table1.getSelectedRow();
+        id = Integer.parseInt((table1.getModel().getValueAt(row,0)).toString());
+        String nama = (table1.getModel().getValueAt(row,1)).toString();
+        String alamat = (table1.getModel().getValueAt(row,2)).toString();
+        String noHP = (table1.getModel().getValueAt(row,3)).toString();
+        String Jenis = (table1.getModel().getValueAt(row,5)).toString();
+        String berat = (table1.getModel().getValueAt(row,8)).toString();
+        txtNama.setText(nama);
+        txtAlamat.setText(alamat);
+        txtNoHP.setText(noHP);
+        comboCucian.setSelectedItem(Jenis);
+        txtBerat.setText(berat);
     }//GEN-LAST:event_table1MouseReleased
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
 

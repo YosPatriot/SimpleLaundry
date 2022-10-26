@@ -250,11 +250,11 @@ public class ServiceCucian {
             System.err.println(ex);
         }
     }
-    public void update(ModelDaftarHarga data)throws SQLException{
+    public void updateCucian(ModelCucian data)throws SQLException{
         try{
-           sql= "Update jeniscuci Set JenisCuci=?, Harga=? WHERE IdJenisCuci="+data.getIdJenis()+" limit 1";
+           sql= "Update cucian Set IdCustomer=?,IdJenisCuci=?,Estimasi=?,Berat=?,Status=? WHERE cucian.IdCucian="+data.getCucianID()+" limit 1";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pst.setString(1, data.getJenisCuci());
+            pst.setString(1, da);
             pst.setInt(2, data.getHarga());
         pst.execute();
         rs.close();

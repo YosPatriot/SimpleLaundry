@@ -31,7 +31,7 @@ public class ServiceMember {
        model.addColumn("Keterangan");
        try{
             stt=CC.createStatement();
-            rs = stt.executeQuery("SELECT * FROM customer");
+            rs = stt.executeQuery("SELECT * FROM customer WHERE Keterangan = 'Member'");
             int no =0;
             while(rs.next()){
             no++;

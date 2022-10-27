@@ -185,7 +185,7 @@ public class Menu extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(117, 117, 117));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Simple Fresh Laundry");
+        jLabel1.setText("Simply Fresh");
 
         jLabel2.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(154, 154, 154));

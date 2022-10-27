@@ -74,7 +74,7 @@
           <Color blue="75" green="75" red="75" type="rgb"/>
         </Property>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Simple Fresh Laundry"/>
+        <Property name="text" type="java.lang.String" value="Simply Fresh"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">

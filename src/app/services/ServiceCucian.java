@@ -242,7 +242,7 @@ public class ServiceCucian {
     }
     public void delete(int idCucian){
         try{
-            sql="DELETE FROM cucian WHERE IdCucian = "+idCucian+"";
+            sql="DELETE cucian,transaksi FROM cucian INNER JOIN transaksi ON cucian.IdCucian = transaksi.IdCucian WHERE cucian.IdCucian = "+idCucian+"";
             pst = CC.prepareStatement(sql);
             pst.execute();
             pst.close();
@@ -252,13 +252,22 @@ public class ServiceCucian {
     }
     public void updateCucian(ModelCucian data)throws SQLException{
         try{
-           sql= "Update cucian Set IdCustomer=?,IdJenisCuci=?,Estimasi=?,Berat=?,Status=? WHERE cucian.IdCucian="+data.getCucianID()+" limit 1";
-           pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pst.setString(1, da);
-            pst.setInt(2, data.getHarga());
-        pst.execute();
-        rs.close();
-        pst.close();   
+           sql= "UPDATE cucian,jeniscuci,customer,transaksi\n" +
+                "SET customer.Nama = '"+data.getCustomer().getNama()+"',\n"+
+                "    customer.Alamat = '"+data.getCustomer().getAlamat()+"',\n"+
+                "    customer.NoHP = '"+data.getCustomer().getNoHP()+"',\n"+
+                "    cucian.IdJenisCuci= (SELECT IdJenisCuci FROM jeniscuci WHERE JenisCuci='"+data.getJenisCucian()+"'),\n"+
+                "    cucian.Berat = "+data.getBerat()+",\n"+
+                "    transaksi.Subtotal = "+data.getTransaksi().getSubTotal()+",\n"+
+                "    transaksi.Diskon = "+data.getTransaksi().getDiskon()+",\n"+
+                "    transaksi.GrandTotal = "+data.getTransaksi().getGrandTotal()+"\n"+
+                "WHERE\n" +
+                "    cucian.IdCucian = transaksi.IdCucian\n" +
+                "    AND cucian.IdJenisCuci = jeniscuci.IdJenisCuci AND cucian.IdCustomer = customer.IdCustomer limit 1";
+            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            pst.execute();
+            rs.close();
+            pst.close(); 
         }catch(SQLException e){
             System.err.println(e);
         }

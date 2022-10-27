@@ -3,6 +3,8 @@ package app.form;
 import app.component.Form;
 import app.services.ServiceTransaksi;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class DaftarTransaksi extends Form {
@@ -11,15 +13,23 @@ public class DaftarTransaksi extends Form {
     public DaftarTransaksi() throws SQLException {
         initComponents();
         st.getData(table);
+        st.getDataSelesai(table1);
         btnLunas.setEnabled(false);
     }
     int idTransaksi;
     String status;
-    private void update(){
+    private void update() throws SQLException{
         int response = JOptionPane.showConfirmDialog(this, "Apakah Transkasi Telah Selsai?", "Konfirmasi Transaksi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if(response==JOptionPane.YES_OPTION){
-            
+            st.update(idTransaksi);
+             st.getData(table);
+            st.getDataSelesai(table1);
+        }else if(response==JOptionPane.NO_OPTION){
+            System.err.println("Failed");
+                  
         }
+            st.getData(table);
+            st.getDataSelesai(table1);
     }
    
     @SuppressWarnings("unchecked")
@@ -75,11 +85,6 @@ public class DaftarTransaksi extends Form {
                 "ID Transaksi", "ID Cucian", "Nama", "Jenis Cuci", "Sub Total", "Diskon", "Total Bayar", "Tanggal", "Status"
             }
         ));
-        table1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                table1MouseReleased(evt);
-            }
-        });
         jScrollPane2.setViewportView(table1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -125,13 +130,15 @@ public class DaftarTransaksi extends Form {
         }
     }//GEN-LAST:event_tableMouseReleased
 
-    private void table1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_table1MouseReleased
-
     private void btnLunasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLunasActionPerformed
-        // TODO add your handling code here:
-        update();
+       try {
+           // TODO add your handling code here:
+           update();
+            st.getData(table);
+            st.getDataSelesai(table1);
+       } catch (SQLException ex) {
+           Logger.getLogger(DaftarTransaksi.class.getName()).log(Level.SEVERE, null, ex);
+       }
     }//GEN-LAST:event_btnLunasActionPerformed
 
 

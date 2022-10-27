@@ -63,6 +63,41 @@ public class DaftarCucian extends Form {
         sc.add(dataCucian);
        }
     }
+    private void update() throws SQLException{
+        if(sc.isMember()==true){ 
+        String nama = txtNama.getText();
+        String noHP = txtNoHP.getText();
+        String alamat = txtAlamat.getText();
+        String jenis = (String) comboCucian.getSelectedItem();
+        int berat = Integer.parseInt(txtBerat.getText());
+        int id=0;
+        int harga = Integer.parseInt(lblNominal.getText());
+        double sub = harga*berat;
+        double diskon = sub*con.getDiskon();
+        double grandTotal = sub-(diskon);
+           System.out.println("sub cucian = " +sub);
+           System.out.println("diskon cucian" +diskon);
+           System.out.println("grand = " +grandTotal);
+        ModelCustomer dataCustomer = new ModelCustomer(id,nama,alamat,noHP);
+        ModelTransaksi dataTransaksi = new ModelTransaksi(sub,diskon,grandTotal,statusBayar);
+        ModelCucian dataCucian = new ModelCucian(id,dataCustomer,jenis,Integer.parseInt(txtBerat.getText()),dataTransaksi);
+        sc.updateCucian(dataCucian);
+       }else{
+        String nama = txtNama.getText();
+        String noHP = txtNoHP.getText();
+        String alamat = txtAlamat.getText();
+        String jenis = (String) comboCucian.getSelectedItem();
+        int berat = Integer.parseInt(txtBerat.getText());
+        int id=0;
+        double sub = Double.parseDouble(lblTotal.getText());
+        double diskon = 0;
+        double grandTotal = Double.parseDouble(lblTotal.getText());
+        ModelCustomer dataCustomer = new ModelCustomer(id,nama,alamat,noHP);
+        ModelTransaksi dataTransaksi = new ModelTransaksi(sub,diskon,grandTotal,statusBayar);
+        ModelCucian dataCucian = new ModelCucian(id,dataCustomer,jenis,Integer.parseInt(txtBerat.getText()),dataTransaksi);
+        sc.updateCucian(dataCucian);
+       }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -158,6 +193,11 @@ public class DaftarCucian extends Form {
         });
 
         jButton3.setText("Hapus");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         checkBox.setText("Member");
         checkBox.addActionListener(new java.awt.event.ActionListener() {
@@ -347,6 +387,7 @@ public class DaftarCucian extends Form {
         try {
             // TODO add your handling code here:
             addCucian();
+            JOptionPane.showMessageDialog(null, "Data Berhasil Ditambahkan !");
             sc.getData(table1);
         } catch (SQLException ex) {
             Logger.getLogger(DaftarCucian.class.getName()).log(Level.SEVERE, null, ex);
@@ -424,11 +465,48 @@ public class DaftarCucian extends Form {
         txtNoHP.setText(noHP);
         comboCucian.setSelectedItem(Jenis);
         txtBerat.setText(berat);
+        int harga = Integer.parseInt(lblNominal.getText());
+        int qty = Integer.parseInt(berat);
+        int total = harga*qty;
+        lblTotal.setText(String.valueOf(total));
     }//GEN-LAST:event_table1MouseReleased
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+      
+        try {
+            // TODO add your handling code here:
+           int response = JOptionPane.showConfirmDialog(this, "Apakah Anda Yakin?", "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+           if(response==JOptionPane.YES_OPTION){
+            update();
+            sc.getData(table1);
+               System.out.println("Succeed");
+           }else if(response==JOptionPane.NO_OPTION){
+               System.err.println("Failed");
+               
+           }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaftarCucian.class.getName()).log(Level.SEVERE, null, ex);
+        }
+       
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+      
+        try {
+        int response = JOptionPane.showConfirmDialog(this, "Apakah Anda Yakin?", "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(response==JOptionPane.YES_OPTION){
+            sc.delete(id);
+            sc.getData(table1);
+        }else if(response==JOptionPane.NO_OPTION){
+               System.err.println("Failed");
+               
+        }
+        } catch (SQLException ex) {
+            Logger.getLogger(DaftarCucian.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
 

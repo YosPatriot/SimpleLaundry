@@ -231,6 +231,7 @@ public class Member extends Form {
             double diskon = Double.parseDouble(txtDiskon.getText());
             sm.add(data,diskon);
             sm.getData(table);
+            JOptionPane.showMessageDialog(null, "Data Berhasil Ditambahkan !");
          } catch (SQLException ex) {
              Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
          }
@@ -238,6 +239,8 @@ public class Member extends Form {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        int response = JOptionPane.showConfirmDialog(this, "Apakah Anda Yakin ?", "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(response==JOptionPane.YES_OPTION){
         sm.delete(MemberID);
          try {
              sm.getData(table);
@@ -245,6 +248,9 @@ public class Member extends Form {
          } catch (SQLException ex) {
              Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
          }
+        }else if(response==JOptionPane.NO_OPTION){
+            System.err.println("Failed");
+        }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void tableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseClicked
@@ -255,10 +261,12 @@ public class Member extends Form {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-         String nama = txtNama.getText();
+            String nama = txtNama.getText();
             String Alamat = txtAlamat.getText();
             String NoHP = txtNoHP.getText();
             ModelCustomer data = new ModelCustomer(MemberID,nama,Alamat,NoHP);
+        int response = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin mengubah ?", "Konfirmasi Update", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(response==JOptionPane.YES_OPTION){
          try {
              sm.update(data,MemberID);
          } catch (SQLException ex) {
@@ -269,6 +277,9 @@ public class Member extends Form {
          } catch (SQLException ex) {
              Logger.getLogger(Member.class.getName()).log(Level.SEVERE, null, ex);
          }
+        }else if(response==JOptionPane.NO_OPTION){
+            System.err.println("Failed");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void tableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseReleased

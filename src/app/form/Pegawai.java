@@ -7,6 +7,7 @@ import app.services.ServicePegawai;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class Pegawai extends Form {
     
@@ -24,14 +25,20 @@ public class Pegawai extends Form {
         String jabatan = txtJabatan.getText();
         int ID = 0;
         sp.add(new ModelPegawai(ID,nama,alamat,noHP,email,jabatan));
+        JOptionPane.showMessageDialog(null, "Data Sukses Ditambahkan !");
     }
     private void updatePegawai() throws SQLException{
+        int response = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin mengubah ?", "Konfirmasi Update", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(response==JOptionPane.YES_OPTION){
         String nama = txtNama.getText();
         String alamat = txtAlamat.getText();
         String noHP = txtNoHP.getText();
         String email = txtEmail.getText();
         String jabatan = txtJabatan.getText();
         sp.update(new ModelPegawai(pegawaiID,nama,alamat,noHP,email,jabatan));
+        }else if(response == JOptionPane.NO_OPTION){
+            System.err.println("Failed");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -236,8 +243,13 @@ public class Pegawai extends Form {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         try {
+            int response = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ?", "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if(response==JOptionPane.YES_OPTION){
             sp.delete(pegawaiID);
             sp.getData(table);
+            }else if(response==JOptionPane.NO_OPTION){
+                System.err.println("Failed");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(Pegawai.class.getName()).log(Level.SEVERE, null, ex);
         }

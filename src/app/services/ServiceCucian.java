@@ -56,13 +56,12 @@ public class ServiceCucian {
        model.addColumn("Customer");
        model.addColumn("Jenis Cucian");
        model.addColumn("Tanggal Masuk");
-       model.addColumn("Estimasi");
        model.addColumn("Berat/Meter/Qty");
        model.addColumn("Status");
        try{
             stt=CC.createStatement();
             rs = stt.executeQuery("SELECT * FROM cucian INNER JOIN customer ON customer.IdCustomer = cucian.IdCustomer INNER JOIN jeniscuci ON jeniscuci.IdJenisCuci = cucian.IdJenisCuci "
-                    + "INNER JOIN transaksi on transaksi.IdCucian = cucian.IdCucian");
+                    + "INNER JOIN transaksi on transaksi.IdCucian = cucian.IdCucian WHERE cucian.Status='Menunggu Antrian'");
             int no =0;
             while(rs.next()){
             int cucianID = rs.getInt("Cucian.IdCucian");
@@ -72,12 +71,11 @@ public class ServiceCucian {
             String tipe = rs.getString("customer.Keterangan");
             String jenis = rs.getString("jeniscuci.JenisCuci");
             Date tglMasuk = rs.getDate("Cucian.Tgl_Masuk");
-            String Estimasi = rs.getString("Cucian.Estimasi");
             String tglKeluar = rs.getString("Cucian.Tgl_Keluar");
             int berat = rs.getInt("Cucian.Berat");
             String status = rs.getString("Cucian.Status");
             int total = rs.getInt("transaksi.GrandTotal");
-             model.addRow(new Object[]{cucianID,nama,alamat,noHP,tipe,jenis,tglMasuk,Estimasi,berat,status});
+             model.addRow(new Object[]{cucianID,nama,alamat,noHP,tipe,jenis,tglMasuk,berat,status});
              table.setModel(model);
             }
         }catch(SQLException e){
@@ -87,8 +85,8 @@ public class ServiceCucian {
     public void add(ModelCucian data)throws SQLException{
         if(isMember()==true){
         try{
-           sql= "INSERT INTO Cucian (IdCustomer,IdJenisCuci,Estimasi,Berat,Status) values ((SELECT IdCustomer FROM Customer WHERE Nama='"+data.getCustomer().getNama()+"' AND Alamat='"+data.getCustomer().getAlamat()+"' AND NoHP='"+data.getCustomer().getNoHP()+"'),"
-                   + "(SELECT IdJenisCuci FROM jeniscuci WHERE JenisCuci='"+data.getJenisCucian()+"'),DATE_ADD(CURDATE(),INTERVAL 3 DAY),"+data.getBerat()+",'Menunggu Antrian')";
+           sql= "INSERT INTO Cucian (IdCustomer,IdJenisCuci,Berat,Status) values ((SELECT IdCustomer FROM Customer WHERE Nama='"+data.getCustomer().getNama()+"' AND Alamat='"+data.getCustomer().getAlamat()+"' AND NoHP='"+data.getCustomer().getNoHP()+"'),"
+                   + "(SELECT IdJenisCuci FROM jeniscuci WHERE JenisCuci='"+data.getJenisCucian()+"'),"+data.getBerat()+",'Menunggu Antrian')";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pst.execute();
         rs = pst.getGeneratedKeys();
@@ -108,8 +106,8 @@ public class ServiceCucian {
         }else{
          addCustomer(data); 
              try{
-           sql= "INSERT INTO Cucian (IdCustomer,IdJenisCuci,Estimasi,Berat,Status) values ((SELECT IdCustomer FROM Customer WHERE Nama='"+data.getCustomer().getNama()+"'),"
-                   + "(SELECT IdJenisCuci FROM jeniscuci WHERE JenisCuci='"+data.getJenisCucian()+"'),DATE_ADD(CURDATE(),INTERVAL 3 DAY),"+data.getBerat()+",'Menunggu Antrian')";
+           sql= "INSERT INTO Cucian (IdCustomer,IdJenisCuci,Berat,Status) values ((SELECT IdCustomer FROM Customer WHERE Nama='"+data.getCustomer().getNama()+"'),"
+                   + "(SELECT IdJenisCuci FROM jeniscuci WHERE JenisCuci='"+data.getJenisCucian()+"'),"+data.getBerat()+",'Menunggu Antrian')";
            pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         pst.execute();
         rs = pst.getGeneratedKeys();

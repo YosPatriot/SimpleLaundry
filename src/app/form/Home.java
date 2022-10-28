@@ -1,101 +1,74 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 package app.form;
 
 import app.component.Form;
-import app.configurations.koneksi;
 import app.model.ModelDashboard;
 import app.services.ServiceDashboard;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
-/**
- *
- * @author Yos Patriot
- */
 public class Home extends Form {
-
-    /**
-     * Creates new form Home
-     */
-    ResultSet rs = null;
-    Connection CC = new koneksi().connect();;
-    PreparedStatement pst = null;
-    Statement stt;
-    String sql;
-    public Home() {
+    int idCucian,idSelesai;
+    String status,statusSelesai,statusBayar;
+    
+    ServiceDashboard sd = new ServiceDashboard();
+    public Home() throws SQLException {
         initComponents();
-        showTable();
-        init();
-        //getPemasukan();
+        getTable();
+        txtPemesan.setText(sd.getCucian());
+        txtPemasukan.setText(sd.getPemasukan());
+        txtMember.setText(sd.getMember());
+        System.out.println(sd.getMember());
+        btnProses.setEnabled(false);
+        btnCucian.setEnabled(false);
+        btnAmbil.setEnabled(false);
     }
-    private void showTable(){
-       DefaultTableModel model = new DefaultTableModel() ;
-       model.addColumn("Nama");
-       model.addColumn("Alamat");
-       model.addColumn("No HP");
-       model.addColumn("Tanggal Masuk");
-       model.addColumn("Jenis Cucian");
-       model.addColumn("Berat/Qty/Meter");
-       model.addColumn("Pemasukan");
-       model.addColumn("Status");
-        try{
-            stt=CC.createStatement();
-            rs = stt.executeQuery("SELECT * FROM Cucian INNER JOIN customer ON customer.IdCustomer = Cucian.IdCustomer"
-                    + " INNER JOIN jeniscuci ON jeniscuci.IdJenisCuci = Cucian.IdJenisCuci");
-            int no =0;
-              while(rs.next()){
-                no++;
-                String nama = rs.getString("Nama");
-                String alamat = rs.getString("Alamat");
-                String noHp = rs.getString("NoHP");
-                Date tglMasuk = rs.getDate("Tgl_Masuk");
-                String jenis = rs.getString("JenisCuci");
-                String status = rs.getString("Status"); 
-                int harga = rs.getInt("Harga");
-                int qty = rs.getInt("Berat");
-                int pemasukan = harga*qty;
-                model.addRow(new Object[]{nama,alamat,noHp,tglMasuk,jenis,qty,pemasukan,status});
-                table.setModel(model);
-              }
-          }catch(Exception e){
-              JOptionPane.showMessageDialog(null, e);
-          }
-      
+    
+    private void getTable(){
+        try {
+            sd.getData(table);
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        try {
+            sd.getDataSelesai(table1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-//    private void getPemasukan(){
-//      int sum = 0;
-//        for(int i =0;i<table.getRowCount();i++){
-//            sum = sum +Integer.parseInt(table.getValueAt(i, 6).toString());  
-//        }
-//        txtPemasukan.setText(Integer.toString(sum));
-//    }
-    private void init(){
-         try{
-            stt=CC.createStatement();
-            sql = "SELECT COUNT(IdCucian) AS NumberOfProducts FROM Cucian";
-            rs = stt.executeQuery(sql);
-            if(rs.next()){
-                txtPemesan.setText(rs.getString("NumberOfProducts"));
-                txtPelanggan.setText(rs.getString("NumberOfProducts"));
+    private void prosesCucian(){
+        ModelDashboard data = new ModelDashboard(idCucian,"","","",status);
+        sd.prosesCucian(data);
+        JOptionPane.showMessageDialog(null,"Cucian Di Proses !!");
+    }
+    private void prosesSelesai(){
+        int response = JOptionPane.showConfirmDialog(this, "Apakah Cucian Telah Siap ?", "Konfirmasi Cucian", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(response==JOptionPane.YES_OPTION){
+        String result = null;
+            if(statusBayar.equals("Belum Lunas")){
+            result="Menunggu Pembayaran";
+            }else if(statusBayar.equals("Lunas")){
+                result="Cucian Siap Diambil";
             }
-         }catch(SQLException e){
-         
-         }
+            ModelDashboard data = new ModelDashboard(idCucian,"","","",result);
+            sd.selesaiCucian(data);
+        }else if(response==JOptionPane.NO_OPTION){
+            System.err.println("Failed");
+        }
     }
-    /**
-     * This method is called from within the constructor to initialize the form.
-     * WARNING: Do NOT modify this code. The content of this method is always
-     * regenerated by the Form Editor.
-     */
+    private void prosesAmbil(){
+        String result = null;
+            if(statusSelesai.equals("Cucian Siap Diambil")){
+                result="Selesai";
+            ModelDashboard data = new ModelDashboard(idSelesai,"","","",result);
+            sd.ambilCucian(data);
+            }else if(statusSelesai.equals("Menunggu Pembayaran")){
+               JOptionPane.showMessageDialog(null, "Silahkan lakukan pembayaran terlebih dahulu !");
+            }
+           
+        
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -104,23 +77,26 @@ public class Home extends Form {
         jLabel1 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txtPemasukan = new javax.swing.JLabel();
-        jComboBox3 = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
         roundPanel2 = new app.swing.RoundPanel();
         jLabel2 = new javax.swing.JLabel();
         txtPemesan = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
         roundPanel3 = new app.swing.RoundPanel();
         jLabel3 = new javax.swing.JLabel();
-        txtPelanggan = new javax.swing.JLabel();
+        txtMember = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
+        btnProses = new javax.swing.JButton();
+        btnCucian = new javax.swing.JButton();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        table1 = new javax.swing.JTable();
+        btnAmbil = new javax.swing.JButton();
 
-        setPreferredSize(new java.awt.Dimension(877, 489));
+        setPreferredSize(new java.awt.Dimension(1000, 688));
 
         roundPanel1.setBackground(new java.awt.Color(85, 194, 239));
         roundPanel1.setPreferredSize(new java.awt.Dimension(279, 151));
@@ -129,18 +105,11 @@ public class Home extends Form {
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("Total Pemasukan");
+        jLabel9.setText("Pemasukan Hari Ini");
 
         txtPemasukan.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
         txtPemasukan.setForeground(new java.awt.Color(255, 255, 255));
         txtPemasukan.setText("000");
-
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBox3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox3ActionPerformed(evt);
-            }
-        });
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
@@ -161,11 +130,6 @@ public class Home extends Form {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(txtPemasukan, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
-            .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(roundPanel1Layout.createSequentialGroup()
-                    .addGap(38, 38, 38)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(98, Short.MAX_VALUE)))
         );
         roundPanel1Layout.setVerticalGroup(
             roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -183,11 +147,6 @@ public class Home extends Form {
                         .addGap(20, 20, 20)
                         .addComponent(txtPemasukan)))
                 .addContainerGap(59, Short.MAX_VALUE))
-            .addGroup(roundPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(roundPanel1Layout.createSequentialGroup()
-                    .addGap(112, 112, 112)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(19, Short.MAX_VALUE)))
         );
 
         roundPanel2.setBackground(new java.awt.Color(68, 30, 182));
@@ -201,9 +160,7 @@ public class Home extends Form {
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setText("Total Pesanan");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel6.setText("Cucian Hari Ini");
 
         javax.swing.GroupLayout roundPanel2Layout = new javax.swing.GroupLayout(roundPanel2);
         roundPanel2.setLayout(roundPanel2Layout);
@@ -217,10 +174,6 @@ public class Home extends Form {
                     .addComponent(jLabel6)
                     .addComponent(txtPemesan))
                 .addGap(24, 24, 24))
-            .addGroup(roundPanel2Layout.createSequentialGroup()
-                .addGap(52, 52, 52)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         roundPanel2Layout.setVerticalGroup(
             roundPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -234,9 +187,7 @@ public class Home extends Form {
                         .addComponent(txtPemesan)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)))
-                .addGap(18, 18, 18)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(56, Short.MAX_VALUE))
         );
 
         roundPanel3.setBackground(new java.awt.Color(191, 80, 233));
@@ -244,15 +195,13 @@ public class Home extends Form {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/app/icon/member.png"))); // NOI18N
 
-        txtPelanggan.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
-        txtPelanggan.setForeground(new java.awt.Color(255, 255, 255));
-        txtPelanggan.setText("000");
+        txtMember.setFont(new java.awt.Font("Tahoma", 1, 30)); // NOI18N
+        txtMember.setForeground(new java.awt.Color(255, 255, 255));
+        txtMember.setText("000");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Total Pelanggan");
-
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jLabel8.setText("Member Aktif");
 
         javax.swing.GroupLayout roundPanel3Layout = new javax.swing.GroupLayout(roundPanel3);
         roundPanel3.setLayout(roundPanel3Layout);
@@ -261,16 +210,11 @@ public class Home extends Form {
             .addGroup(roundPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8)
-                    .addComponent(txtPelanggan))
+                    .addComponent(txtMember))
                 .addGap(17, 17, 17))
-            .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(roundPanel3Layout.createSequentialGroup()
-                    .addGap(35, 35, 35)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(88, Short.MAX_VALUE)))
         );
         roundPanel3Layout.setVerticalGroup(
             roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -279,57 +223,113 @@ public class Home extends Form {
                 .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addGroup(roundPanel3Layout.createSequentialGroup()
-                        .addComponent(txtPelanggan)
+                        .addComponent(txtMember)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel8)))
-                .addContainerGap(65, Short.MAX_VALUE))
-            .addGroup(roundPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(roundPanel3Layout.createSequentialGroup()
-                    .addGap(112, 112, 112)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(19, Short.MAX_VALUE)))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "No", "Nama", "No HP", "Alamat", "null"
+                "ID Cucian", "Nama", "Alamat", "No HP", "Tanggal Masuk", "Jenis Cucian", "Berat/Qty/Meter", "Status Cucian", "Status Bayar"
             }
         ));
-        table.setShowGrid(false);
+        table.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                tableMouseReleased(evt);
+            }
+        });
         jScrollPane1.setViewportView(table);
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(68, 27, 184));
         jLabel4.setText("Daftar Antrian");
 
+        btnProses.setText("Proses Cucian");
+        btnProses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnProsesActionPerformed(evt);
+            }
+        });
+
+        btnCucian.setText("Cucian Selesai");
+        btnCucian.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCucianActionPerformed(evt);
+            }
+        });
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(68, 27, 184));
+        jLabel5.setText("Daftar Cucian Selesai");
+
+        table1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "ID Cucian", "Nama", "Alamat", "No HP", "Selesai", "Keluar", "Jenis Cucian", "Status Cucian"
+            }
+        ));
+        table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                table1MouseReleased(evt);
+            }
+        });
+        jScrollPane2.setViewportView(table1);
+
+        btnAmbil.setText("Ambil Cucian");
+        btnAmbil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAmbilActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 417, Short.MAX_VALUE))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(roundPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
+                                        .addGap(12, 12, 12)
+                                        .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 312, Short.MAX_VALUE)))
                                 .addGap(18, 18, 18)
-                                .addComponent(roundPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 271, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addComponent(roundPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)))
-                .addGap(36, 36, 36))
+                                .addComponent(roundPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)))
+                        .addGap(10, 10, 10))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnProses)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCucian)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 813, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(btnAmbil))
+                                .addGap(795, 795, 795)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,34 +342,109 @@ public class Home extends Form {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 403, Short.MAX_VALUE)
-                .addGap(35, 35, 35))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnProses)
+                    .addComponent(btnCucian))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnAmbil)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jComboBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox3ActionPerformed
+    private void tableMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableMouseReleased
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox3ActionPerformed
+        int row = table.getSelectedRow();
+        idCucian = Integer.parseInt((table.getModel().getValueAt(row,0)).toString());
+        String jenis = (table.getModel().getValueAt(row,2)).toString();
+        status = (table.getModel().getValueAt(row,7)).toString();
+        statusBayar = (table.getModel().getValueAt(row,8)).toString();
+        if(status.equals("Menunggu Antrian")){
+            btnProses.setEnabled(true);
+            btnCucian.setEnabled(false);
+        }else if(status.equals("Di Proses")){
+            btnProses.setEnabled(false);
+            btnCucian.setEnabled(true);
+        }
+        System.out.println("ID Cucian : "+idCucian);
+        System.out.println("Status : "+idCucian);
+    }//GEN-LAST:event_tableMouseReleased
+
+    private void table1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseReleased
+        // TODO add your handling code here:
+        int row = table1.getSelectedRow();
+        idSelesai = Integer.parseInt((table1.getModel().getValueAt(row,0)).toString());
+        String jenis = (table1.getModel().getValueAt(row,2)).toString();
+        String harga = (table1.getModel().getValueAt(row,3)).toString();
+        statusSelesai = (table1.getModel().getValueAt(row,7)).toString();
+        btnAmbil.setEnabled(true);
+        System.out.println("ID Cucian : "+idCucian);
+        System.out.println("Status : "+idCucian);
+    }//GEN-LAST:event_table1MouseReleased
+
+    private void btnProsesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProsesActionPerformed
+        // TODO add your handling code here:
+       
+        try {
+             prosesCucian();
+            sd.getData(table);
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnProsesActionPerformed
+
+    private void btnCucianActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCucianActionPerformed
+        // TODO add your handling code here:
+        
+        try {
+            prosesSelesai();
+            sd.getData(table);
+            sd.getDataSelesai(table1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btnCucianActionPerformed
+
+    private void btnAmbilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAmbilActionPerformed
+        // TODO add your handling code here:
+        
+         try {
+             prosesAmbil();
+            sd.getData(table);
+            sd.getDataSelesai(table1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Home.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_btnAmbilActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JButton btnAmbil;
+    private javax.swing.JButton btnCucian;
+    private javax.swing.JButton btnProses;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private app.swing.RoundPanel roundPanel1;
     private app.swing.RoundPanel roundPanel2;
     private app.swing.RoundPanel roundPanel3;
     private javax.swing.JTable table;
-    private javax.swing.JLabel txtPelanggan;
+    private javax.swing.JTable table1;
+    private javax.swing.JLabel txtMember;
     private javax.swing.JLabel txtPemasukan;
     private javax.swing.JLabel txtPemesan;
     // End of variables declaration//GEN-END:variables

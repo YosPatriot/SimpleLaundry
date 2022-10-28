@@ -33,6 +33,7 @@ public class DaftarHarga extends Form {
         int harga = Integer.parseInt(txtHarga.getText());
         int id=0;
         sd.add(new ModelDaftarHarga(id,jenis,harga));
+        JOptionPane.showMessageDialog(null, "Data Berhasil Ditambahkan !!");
        }catch(NumberFormatException e){
            JOptionPane.showMessageDialog(null, "Input Harga tidak sesuai !!");
        }
@@ -175,20 +176,31 @@ public class DaftarHarga extends Form {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
             // TODO add your handling code here:
+        int response = JOptionPane.showConfirmDialog(this, "Apakah anda yakin ingin mengubah ?", "Konfirmasi Update", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(response==JOptionPane.YES_OPTION){
             updateHarga();
             sd.getData(table1);
+        }else if (response == JOptionPane.NO_OPTION){
+            System.err.println("Failed");
+        }
         } catch (SQLException ex) {
             Logger.getLogger(DaftarHarga.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        int response = JOptionPane.showConfirmDialog(this, "Apakah Adna Yakin ?", "Konfirmasi Hapus Data", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+        if(response==JOptionPane.YES_OPTION){
         sd.delete(idHarga);
         try {
             sd.getData(table1);
         } catch (SQLException ex) {
             Logger.getLogger(DaftarHarga.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }else if(response == JOptionPane.NO_OPTION){
+            System.err.println("Failed");
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 

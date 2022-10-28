@@ -5,6 +5,7 @@ import app.form.DaftarHarga;
 import app.form.Home;
 import app.form.DaftarCucian;
 import app.form.DaftarTransaksi;
+import app.form.Laporan;
 import app.form.Member;
 import app.form.Pegawai;
 import app.menu.EventMenu;
@@ -17,17 +18,21 @@ import java.util.logging.Logger;
 public class Dashboard extends javax.swing.JFrame {
 
     
-    public Dashboard() {
+    public Dashboard() throws SQLException {
         initComponents();
         init();
         
     }
-    private void init(){
+    private void init() throws SQLException{
     menu.addEventMenu(new EventMenu() {
             @Override
             public void selectedMenu(int index) {
                 if(index==0){
-                    mainBody1.displayForm(new Home(),"Beranda");
+                    try {
+                        mainBody1.displayForm(new Home(),"Beranda");
+                    } catch (SQLException ex) {
+                        Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }else if(index == 1){
                     try {
                         mainBody1.displayForm(new DaftarHarga(), "Daftar Harga");
@@ -49,17 +54,19 @@ public class Dashboard extends javax.swing.JFrame {
                 }
                 else if (index==4){ 
                     try {
-                        mainBody1.displayForm(new Pegawai(), "Pegawai");
+                        mainBody1.displayForm( new Member(), "Member");
                     } catch (SQLException ex) {
                         Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }else if (index==5){ 
                     try {
-                        mainBody1.displayForm(new Member(), "Member");
+                        mainBody1.displayForm(new Pegawai(), "Pegawai");
                     } catch (SQLException ex) {
                         Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                }else if(index == 6){
+                }else if (index==6){ 
+                    mainBody1.displayForm(new Laporan(), "Laporan");
+                }else if(index == 7){
                     Login a = new Login();
                     a.setVisible(true);
                     UserSession.setUserLogin("");
@@ -92,10 +99,8 @@ public class Dashboard extends javax.swing.JFrame {
         );
         panelBackground1Layout.setVerticalGroup(
             panelBackground1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(panelBackground1Layout.createSequentialGroup()
-                .addComponent(mainBody1, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(menu, javax.swing.GroupLayout.DEFAULT_SIZE, 549, Short.MAX_VALUE)
+            .addComponent(mainBody1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -143,7 +148,11 @@ public class Dashboard extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Dashboard().setVisible(true);
+                try {
+                    new Dashboard().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

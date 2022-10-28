@@ -59,9 +59,10 @@ public class Menu extends javax.swing.JPanel {
         addMenu("Daftar Harga",null, 1);
         addMenu("Daftar Cucian", null, 2);
         addMenu("Daftar Transaksi", null, 3);
-        addMenu("Pegawai",null,4);
-        addMenu("Member", null, 5);
-        addMenu("Logout", null, 6);
+        addMenu("Member",null,4);
+        addMenu("Pegawai", null, 5);
+        addMenu("Laporan", null, 6);
+        addMenu("Logout", null, 7);
         
         //  add more menu here
         menu.repaint();
@@ -191,6 +192,8 @@ public class Menu extends javax.swing.JPanel {
         jLabel2.setForeground(new java.awt.Color(154, 154, 154));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Admin");
+
+        imageAvatar1.setImage(new javax.swing.ImageIcon(getClass().getResource("/app/icon/logo1.jpg"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

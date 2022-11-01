@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : localhost_33061
+ Source Server         : db
  Source Server Type    : MySQL
- Source Server Version : 100414
+ Source Server Version : 100424
  Source Host           : localhost:3306
  Source Schema         : simple
 
  Target Server Type    : MySQL
- Target Server Version : 100414
+ Target Server Version : 100424
  File Encoding         : 65001
 
- Date: 25/10/2022 17:33:26
+ Date: 01/11/2022 12:54:14
 */
 
 SET NAMES utf8mb4;
@@ -43,17 +43,20 @@ CREATE TABLE `cucian`  (
   `IdCustomer` int NULL DEFAULT NULL,
   `IdJenisCuci` int NULL DEFAULT NULL,
   `Tgl_Masuk` datetime NULL DEFAULT current_timestamp,
-  `Estimasi` date NULL DEFAULT NULL,
-  `Tgl_Keluar` datetime NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `Selesai` date NULL DEFAULT NULL,
+  `Tgl_Keluar` date NULL DEFAULT NULL,
   `Berat` int NULL DEFAULT NULL,
   `Status` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`IdCucian`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 27 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 91 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of cucian
 -- ----------------------------
-INSERT INTO `cucian` VALUES (26, 10028, 2, '2022-10-25 17:29:08', '2022-10-28', NULL, 2, 'Menunggu Antrian');
+INSERT INTO `cucian` VALUES (87, 10072, 1, '2022-10-29 01:45:00', '2022-10-29', NULL, 3, 'Menunggu Pembayaran');
+INSERT INTO `cucian` VALUES (88, 10074, 1, '2022-10-29 01:47:30', '2022-10-29', '2022-10-29', 2, 'Selesai');
+INSERT INTO `cucian` VALUES (89, 10075, 1, '2022-10-29 01:47:39', '2022-10-30', NULL, 2, 'Menunggu Pembayaran');
+INSERT INTO `cucian` VALUES (90, 10076, 2, '2022-10-29 16:23:45', '2022-10-30', '2022-10-29', 2, 'Selesai');
 
 -- ----------------------------
 -- Table structure for customer
@@ -66,12 +69,47 @@ CREATE TABLE `customer`  (
   `NoHP` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `Keterangan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`IdCustomer`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 10029 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 10077 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of customer
 -- ----------------------------
-INSERT INTO `customer` VALUES (10028, 'sdasd', 'asd', 'ggasd', 'Non-Member');
+INSERT INTO `customer` VALUES (10039, 'vvxcvxcvxcvx', 'svvzsad', 's222', 'Member');
+INSERT INTO `customer` VALUES (10042, '1sdas', 'asdd', 'gg', 'Non-Member');
+INSERT INTO `customer` VALUES (10043, '1sdas', 'asdd', 'gg', 'Non-Member');
+INSERT INTO `customer` VALUES (10044, 'Dera Ag', '3123', '2321', 'Non-Member');
+INSERT INTO `customer` VALUES (10045, 'gbbcx', 'sdfggg', 'sdffsdf', 'Non-Member');
+INSERT INTO `customer` VALUES (10046, 'nmm,m,mn,', 'ssss', '213123', 'Non-Member');
+INSERT INTO `customer` VALUES (10047, 'sadasd', 'asdasdasd', 'xzc', 'Non-Member');
+INSERT INTO `customer` VALUES (10048, 'dasd', 'xasd', 'z', 'Non-Member');
+INSERT INTO `customer` VALUES (10049, 'sgggggg', 'sefasdasdsadsda', 'asdawwvzxa', 'Non-Member');
+INSERT INTO `customer` VALUES (10050, 'zxc', 'se', 'asda', 'Non-Member');
+INSERT INTO `customer` VALUES (10051, 'zxcdd', 'se', 'asda', 'Non-Member');
+INSERT INTO `customer` VALUES (10052, 'zxcsdq1', 'sefasdasdsad', 'asdaww', 'Non-Member');
+INSERT INTO `customer` VALUES (10053, 'zxczs', 'asdasd', 'sad', 'Non-Member');
+INSERT INTO `customer` VALUES (10054, 'zxczs', 'asdasd', 'sadvvzx', 'Non-Member');
+INSERT INTO `customer` VALUES (10055, 'zxczssdsd', 'asdasd', 'sadvvzx', 'Non-Member');
+INSERT INTO `customer` VALUES (10056, 'czxczxc', 'sezxczxc', 'asda', 'Non-Member');
+INSERT INTO `customer` VALUES (10057, 'xzczxbbbbbbbb zxcsdq1', 'sefasdasdsad', 'asdaww', 'Non-Member');
+INSERT INTO `customer` VALUES (10058, 'zxcdd zxcvzxczxc', 'se', 'asda', 'Non-Member');
+INSERT INTO `customer` VALUES (10059, 'aas', 'dd', '22', 'Member');
+INSERT INTO `customer` VALUES (10060, 'c', 'xzasd', 'sd', 'Member');
+INSERT INTO `customer` VALUES (10061, 'sd', 'asdas', 'da', 'Non-Member');
+INSERT INTO `customer` VALUES (10062, 'cbm]lpdfmg[sdmfsadf', 'aaasdfsdf', 'cvncvnxcv', 'Non-Member');
+INSERT INTO `customer` VALUES (10063, 'zxczxasd', 'dd', '22', 'Non-Member');
+INSERT INTO `customer` VALUES (10064, 'asd', 'asdddas', 'zxc', 'Non-Member');
+INSERT INTO `customer` VALUES (10065, 'hhhhhh', 'sdasd', '232', 'Non-Member');
+INSERT INTO `customer` VALUES (10066, 'sd', 'dasd', 'aas', 'Non-Member');
+INSERT INTO `customer` VALUES (10067, 'hhhhhjjasd', 'dasd', 'aas', 'Non-Member');
+INSERT INTO `customer` VALUES (10068, 'vzx', 'dasdas', 'sss', 'Non-Member');
+INSERT INTO `customer` VALUES (10069, 'ffasds', 'dasdas', 'sss', 'Non-Member');
+INSERT INTO `customer` VALUES (10070, 'ololol', 'ssdds', 'ss', 'Non-Member');
+INSERT INTO `customer` VALUES (10071, 'aahhh', 'zxc', 'xc', 'Non-Member');
+INSERT INTO `customer` VALUES (10072, 'ihhh', 'zxczxczx', 'xczx', 'Non-Member');
+INSERT INTO `customer` VALUES (10073, 'hhhhhh', 'asds', 'aaa', 'Non-Member');
+INSERT INTO `customer` VALUES (10074, 'lololololololo', 'asds', 'aaa', 'Non-Member');
+INSERT INTO `customer` VALUES (10075, '45555', 'asds', 'aaa', 'Non-Member');
+INSERT INTO `customer` VALUES (10076, 'asdasd', 'asd', 'zxxzc', 'Non-Member');
 
 -- ----------------------------
 -- Table structure for jeniscuci
@@ -82,14 +120,14 @@ CREATE TABLE `jeniscuci`  (
   `JenisCuci` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `Harga` int NULL DEFAULT NULL,
   PRIMARY KEY (`IdJenisCuci`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of jeniscuci
 -- ----------------------------
 INSERT INTO `jeniscuci` VALUES (1, 'Jas', 20000);
-INSERT INTO `jeniscuci` VALUES (2, 'Karpet', 10000);
-INSERT INTO `jeniscuci` VALUES (3, 'Baju', 2333);
+INSERT INTO `jeniscuci` VALUES (2, '22', 3123);
+INSERT INTO `jeniscuci` VALUES (4, '2222', 3123);
 
 -- ----------------------------
 -- Table structure for karyawan
@@ -104,14 +142,11 @@ CREATE TABLE `karyawan`  (
   `Jabatan` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `UserId` int NULL DEFAULT NULL,
   PRIMARY KEY (`IdKaryawan`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1005 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1006 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of karyawan
 -- ----------------------------
-INSERT INTO `karyawan` VALUES (1000, '2222', 'ss', 's', 'ssd', 'sddddd', 1);
-INSERT INTO `karyawan` VALUES (1001, '22312', '222', '1123', '1222', '332', NULL);
-INSERT INTO `karyawan` VALUES (1003, '2222', '222', '1123', '1222', '332', NULL);
 
 -- ----------------------------
 -- Table structure for transaksi
@@ -126,10 +161,23 @@ CREATE TABLE `transaksi`  (
   `Tanggal` datetime NULL DEFAULT current_timestamp ON UPDATE CURRENT_TIMESTAMP,
   `StatusTransaksi` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`IdTrx`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 55 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of transaksi
 -- ----------------------------
+INSERT INTO `transaksi` VALUES (42, 78, '40000.0', '0.0', '40000.0', '2022-10-28 22:41:24', 'Lunas');
+INSERT INTO `transaksi` VALUES (43, 79, '40000.0', '0.0', '40000.0', '2022-10-28 20:08:22', 'Lunas');
+INSERT INTO `transaksi` VALUES (44, 80, '40000.0', '0.0', '40000.0', '2022-10-28 21:41:23', 'Lunas');
+INSERT INTO `transaksi` VALUES (45, 81, '40000.0', '0.0', '40000.0', '2022-10-28 22:41:53', 'Belum Lunas');
+INSERT INTO `transaksi` VALUES (46, 82, '40000.0', '0.0', '40000.0', '2022-10-28 22:59:14', 'Belum Lunas');
+INSERT INTO `transaksi` VALUES (47, 83, '40000.0', '0.0', '40000.0', '2022-10-29 01:28:07', 'Lunas');
+INSERT INTO `transaksi` VALUES (48, 84, '40000.0', '0.0', '40000.0', '2022-10-29 01:28:13', 'Belum Lunas');
+INSERT INTO `transaksi` VALUES (49, 85, '40000.0', '0.0', '40000.0', '2022-10-29 01:40:09', 'Lunas');
+INSERT INTO `transaksi` VALUES (50, 86, '40000.0', '0.0', '40000.0', '2022-10-29 01:44:31', 'Lunas');
+INSERT INTO `transaksi` VALUES (51, 87, '60000.0', '0.0', '60000.0', '2022-10-29 01:45:00', 'Belum Lunas');
+INSERT INTO `transaksi` VALUES (52, 88, '40000.0', '0.0', '40000.0', '2022-10-29 01:47:30', 'Lunas');
+INSERT INTO `transaksi` VALUES (53, 89, '40000.0', '0.0', '40000.0', '2022-10-29 01:47:40', 'Belum Lunas');
+INSERT INTO `transaksi` VALUES (54, 90, '6246.0', '0.0', '6246.0', '2022-10-29 16:23:45', 'Lunas');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e03d139f-1132-4ef2-a9e1-3228061b41de">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="33"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="img" class="java.lang.String"/>
 	<parameter name="instansi" class="java.lang.String"/>
@@ -16,30 +16,9 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM Cucian INNER JOIN customer ON customer.IdCustomer = Cucian.IdCustomer INNER JOIN jeniscuci ON jeniscuci.IdJenisCuci = Cucian.IdJenisCuci JOIN transaksi ON transaksi.IdCucian=cucian.IdCucian WHERE transaksi.Tanggal>=$P{dari} AND transaksi.Tanggal <=$P{sampai} ORDER BY transaksi.Tanggal]]>
+		<![CDATA[SELECT * FROM Customer WHERE Keterangan = 'Member' AND CreatedAt >= $P{dari} AND CreatedAt <=$P{sampai} ORDER By CreatedAt]]>
 	</queryString>
-	<field name="IdCucian" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
 	<field name="IdCustomer" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="IdJenisCuci" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Tgl_Masuk" class="java.time.LocalDateTime">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Selesai" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Tgl_Keluar" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Berat" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Status" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Nama" class="java.lang.String">
@@ -54,28 +33,7 @@
 	<field name="Keterangan" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="JenisCuci" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Harga" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="IdTrx" class="java.lang.Integer">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Subtotal" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Diskon" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="GrandTotal" class="java.lang.String">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="Tanggal" class="java.sql.Date">
-		<fieldDescription><![CDATA[]]></fieldDescription>
-	</field>
-	<field name="StatusTransaksi" class="java.lang.String">
+	<field name="CreatedAt" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<variable name="Nomor" class="java.lang.Integer" resetType="None" calculation="Count">
@@ -98,7 +56,7 @@
 				<textFieldExpression><![CDATA[$P{instansi}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="148" y="33" width="407" height="20" uuid="b7f374e8-56e3-4e0a-bcfc-f924990f5217"/>
+				<reportElement x="138" y="33" width="407" height="20" uuid="b7f374e8-56e3-4e0a-bcfc-f924990f5217"/>
 				<textElement textAlignment="Left">
 					<font size="12"/>
 				</textElement>
@@ -116,30 +74,20 @@
 	<columnHeader>
 		<band height="61" splitType="Stretch">
 			<staticText>
-				<reportElement x="224" y="0" width="146" height="20" uuid="ff653c23-1aed-4cf9-ac5e-820da3665439"/>
+				<reportElement x="231" y="0" width="146" height="20" uuid="ff653c23-1aed-4cf9-ac5e-820da3665439"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Laporan Transaksi]]></text>
+				<text><![CDATA[Laporan Non Member]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="44" y="41" width="59" height="20" uuid="1ea1235a-f3dc-4583-9062-9807d1412895"/>
+				<reportElement x="194" y="41" width="120" height="20" uuid="9c6ea5f5-081b-4031-a125-61a47a617060"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="239" y="41" width="75" height="20" uuid="9c6ea5f5-081b-4031-a125-61a47a617060"/>
-			</rectangle>
-			<staticText>
-				<reportElement x="44" y="41" width="59" height="20" uuid="9e5260fa-f9dc-48c6-89d7-0abce6e1aa37"/>
-				<textElement textAlignment="Center">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[ID Trx]]></text>
-			</staticText>
-			<rectangle>
-				<reportElement x="314" y="41" width="73" height="20" uuid="71d15bbc-34e6-48cf-8891-5b586d5c0587"/>
+				<reportElement x="314" y="41" width="87" height="20" uuid="71d15bbc-34e6-48cf-8891-5b586d5c0587"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="103" y="41" width="68" height="20" uuid="ed74b547-6a79-4052-b3a0-9a2c08f9e8b7"/>
+				<reportElement x="44" y="41" width="68" height="20" uuid="ed74b547-6a79-4052-b3a0-9a2c08f9e8b7"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="3" y="41" width="41" height="20" uuid="5a6b377d-9480-492a-8d40-2326e180596c"/>
@@ -152,107 +100,115 @@
 				<text><![CDATA[No]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="103" y="41" width="68" height="20" uuid="e91d0d40-48bf-44ed-ae04-f169f19d8835"/>
+				<reportElement x="44" y="41" width="68" height="20" uuid="e91d0d40-48bf-44ed-ae04-f169f19d8835"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[ID Customer]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="171" y="41" width="68" height="20" uuid="befe8626-f39c-4979-8e70-a34df7a20d8d"/>
+				<reportElement x="112" y="41" width="82" height="20" uuid="befe8626-f39c-4979-8e70-a34df7a20d8d"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="171" y="41" width="68" height="20" uuid="70cd3943-8077-4315-8eb5-b36e9f03e284"/>
+				<reportElement x="112" y="41" width="82" height="20" uuid="70cd3943-8077-4315-8eb5-b36e9f03e284"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nama]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="239" y="41" width="75" height="20" uuid="2d9533cf-4a12-4a59-9d4a-5bec3a7695ee"/>
+				<reportElement x="194" y="41" width="120" height="20" uuid="2d9533cf-4a12-4a59-9d4a-5bec3a7695ee"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Total Bayar]]></text>
+				<text><![CDATA[Alamat]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="314" y="41" width="73" height="20" uuid="e8c0147a-c08d-431f-b35e-f013c2f52e6b"/>
+				<reportElement x="314" y="41" width="87" height="20" uuid="e8c0147a-c08d-431f-b35e-f013c2f52e6b"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Tanggal]]></text>
+				<text><![CDATA[No HP]]></text>
 			</staticText>
 			<rectangle>
-				<reportElement x="387" y="41" width="168" height="20" uuid="d6180b24-af7e-4fed-9cb9-9c2f79cb737e"/>
+				<reportElement x="401" y="41" width="90" height="20" uuid="d6180b24-af7e-4fed-9cb9-9c2f79cb737e"/>
 			</rectangle>
 			<staticText>
-				<reportElement x="387" y="41" width="168" height="20" uuid="cafca4d2-3dcd-40c3-9b83-b02804b8c8a0"/>
+				<reportElement x="401" y="41" width="90" height="20" uuid="cafca4d2-3dcd-40c3-9b83-b02804b8c8a0"/>
 				<textElement textAlignment="Center">
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Keterangan]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="491" y="41" width="67" height="20" uuid="b93a1280-e037-410c-a197-6e362c45211a"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="491" y="41" width="64" height="20" uuid="5102477b-c85e-4fab-b511-607832facec3"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Created At]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="21" splitType="Stretch">
 			<rectangle>
-				<reportElement x="103" y="0" width="68" height="20" uuid="c2b58ea1-4f57-4f67-a3d4-9b34fc3d9e5e"/>
+				<reportElement x="44" y="0" width="68" height="20" uuid="c2b58ea1-4f57-4f67-a3d4-9b34fc3d9e5e"/>
 			</rectangle>
 			<rectangle>
 				<reportElement x="3" y="0" width="41" height="20" uuid="aa056a9b-efba-4e19-91fe-beb5b9e79106"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="239" y="0" width="75" height="20" uuid="6e717974-c304-4df9-8041-7f736564589d"/>
+				<reportElement x="194" y="0" width="120" height="20" uuid="6e717974-c304-4df9-8041-7f736564589d"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="314" y="0" width="73" height="20" uuid="1e924103-5781-45f4-85a8-5ec9b30bf73c"/>
-			</rectangle>
-			<rectangle>
-				<reportElement x="44" y="0" width="59" height="20" uuid="f24aafe1-4087-4b0a-8ea8-acd86179b145"/>
+				<reportElement x="314" y="0" width="87" height="20" uuid="1e924103-5781-45f4-85a8-5ec9b30bf73c"/>
 			</rectangle>
 			<textField pattern="###0;-###0">
 				<reportElement x="3" y="1" width="41" height="19" uuid="75990154-ee50-4749-a878-98cdd5e0a11b"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[new Integer($V{Nomor}.intValue()+$P{no}.intValue())]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="103" y="1" width="68" height="19" uuid="edf2ea4f-77c4-409c-9c95-52aecff14811"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{IdCustomer}]]></textFieldExpression>
-			</textField>
 			<rectangle>
-				<reportElement x="171" y="0" width="68" height="20" uuid="61462f78-6d79-4cef-b242-9109c02a85f3"/>
+				<reportElement x="112" y="0" width="82" height="20" uuid="61462f78-6d79-4cef-b242-9109c02a85f3"/>
 			</rectangle>
 			<textField>
-				<reportElement x="171" y="1" width="68" height="19" uuid="7351b1a1-5efb-463e-9510-5270745fbf9e"/>
+				<reportElement x="112" y="0" width="82" height="19" uuid="7351b1a1-5efb-463e-9510-5270745fbf9e"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{Nama}]]></textFieldExpression>
 			</textField>
 			<rectangle>
-				<reportElement x="387" y="0" width="168" height="20" uuid="3292ffe2-1f72-4f77-a931-23f044321c4f"/>
+				<reportElement x="401" y="0" width="90" height="20" uuid="3292ffe2-1f72-4f77-a931-23f044321c4f"/>
 			</rectangle>
 			<textField>
-				<reportElement x="44" y="1" width="59" height="20" uuid="631ec972-cf89-4321-b88b-e5d847d5446a"/>
+				<reportElement x="44" y="0" width="68" height="19" uuid="edf2ea4f-77c4-409c-9c95-52aecff14811"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{IdTrx}]]></textFieldExpression>
-			</textField>
-			<textField pattern="¤ #,##0" isBlankWhenNull="true">
-				<reportElement x="239" y="0" width="75" height="20" uuid="5f90167f-e200-432d-8878-23680e54c68f"/>
-				<textElement textAlignment="Center">
-					<font isStrikeThrough="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{GrandTotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{IdCustomer}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="387" y="1" width="168" height="20" uuid="252e2254-af6d-4260-bd73-8704fe7312de"/>
+				<reportElement x="194" y="1" width="120" height="20" uuid="cf675005-b4ba-47fb-af1f-b02efbaf9a27"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{StatusTransaksi}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Alamat}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd-MMM-yy">
-				<reportElement x="314" y="1" width="73" height="19" uuid="0f84afc9-ecb7-48b3-b639-fcaa05bc15e4"/>
+			<textField>
+				<reportElement x="313" y="1" width="88" height="20" uuid="85fc3708-4c06-4d1d-bad5-caca1136c1bd"/>
 				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{Tanggal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{NoHP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="401" y="1" width="90" height="20" uuid="07be83bf-dde8-4f95-ae42-507c695388d5"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Keterangan}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="491" y="0" width="67" height="20" uuid="18384248-a5f7-430b-bcd7-515021172f9f"/>
+			</rectangle>
+			<textField pattern="dd-MMM-yy">
+				<reportElement x="491" y="1" width="67" height="20" uuid="86be5842-5abd-45a0-8750-2d8bdd75f80d"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{CreatedAt}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

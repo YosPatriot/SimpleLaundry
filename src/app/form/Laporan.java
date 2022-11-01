@@ -105,6 +105,12 @@ public class Laporan extends Form{
         String sampai=txtSampai.getText();
         if(comboLaporan.getSelectedItem().equals("Cucian")){
             sr.reportCucian(dari,sampai);
+        }else if (comboLaporan.getSelectedItem().equals("Transaksi")){
+            sr.reportTrx(dari, sampai);
+        }else if (comboLaporan.getSelectedItem().equals("Member")){
+            sr.reportMember(dari, sampai);
+        }else if (comboLaporan.getSelectedItem().equals("Non-Member")){
+            sr.reportNonMember(dari, sampai);
         }
     }//GEN-LAST:event_btnCetakActionPerformed
 

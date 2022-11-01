@@ -63,6 +63,7 @@ public class Home extends Form {
                 result="Selesai";
             ModelDashboard data = new ModelDashboard(idSelesai,"","","",result);
             sd.ambilCucian(data);
+            JOptionPane.showMessageDialog(null, "Cucian Berhasil Diambil !");
             }else if(statusSelesai.equals("Menunggu Pembayaran")){
                JOptionPane.showMessageDialog(null, "Silahkan lakukan pembayaran terlebih dahulu !");
             }

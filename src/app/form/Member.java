@@ -6,43 +6,23 @@ package app.form;
 
 import app.component.Form;
 import app.configurations.config;
-import app.configurations.koneksi;
 import app.model.ModelCustomer;
-import app.model.ModelTransaksi;
-import app.services.ServiceCucian;
 import app.services.ServiceMember;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import app.services.ServiceReport;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
 
-/**
- *
- * @author Yos Patriot
- */
 public class Member extends Form {
-
-    /**
-     * Creates new form Member
-     */
-     ResultSet rs = null;
-    Connection CC = new koneksi().connect();;
-    PreparedStatement pst = null;
-    Statement stt;
-    String sql;
     config con = new config();
     ServiceMember sm = new ServiceMember();
+    ServiceReport sr = new ServiceReport();
     int MemberID;
     public Member() throws SQLException {
         initComponents();    
-        sm.getData(table);   
+        sm.getData(table);
+        btnKartu.setEnabled(false);
         txtDiskon.setText(con.GetProp(lblDiskon.getText()));
     }
     @SuppressWarnings("unchecked")
@@ -66,6 +46,7 @@ public class Member extends Form {
         lblDiskon = new javax.swing.JLabel();
         txtDiskon = new javax.swing.JTextField();
         jButton4 = new javax.swing.JButton();
+        btnKartu = new javax.swing.JButton();
 
         jLabel2.setText("Nama ");
 
@@ -136,6 +117,13 @@ public class Member extends Form {
             }
         });
 
+        btnKartu.setText("Cetak Kartu");
+        btnKartu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKartuActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -170,18 +158,20 @@ public class Member extends Form {
                         .addComponent(jLabel4)))
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblDiskon)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtDiskon, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton4)))
-                        .addGap(0, 64, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblDiskon)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtDiskon, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnKartu))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -195,7 +185,8 @@ public class Member extends Form {
                     .addComponent(lblDiskon)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(txtDiskon, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton4)))
+                        .addComponent(jButton4)
+                        .addComponent(btnKartu)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -293,7 +284,8 @@ public class Member extends Form {
         txtNama.setText(nama);
         txtAlamat.setText(alamat);
         txtNoHP.setText(noHP);
-        System.out.println(MemberID);
+        btnKartu.setEnabled(true);
+        //System.out.println(MemberID);
     }//GEN-LAST:event_tableMouseReleased
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -307,8 +299,15 @@ public class Member extends Form {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void btnKartuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKartuActionPerformed
+        // TODO add your handling code here:
+        System.out.println(MemberID);
+        sr.cardMember(MemberID);
+    }//GEN-LAST:event_btnKartuActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnKartu;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;

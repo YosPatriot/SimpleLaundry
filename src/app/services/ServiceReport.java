@@ -168,9 +168,23 @@ public class ServiceReport {
             param.put("instansi", a);
             param.put("alamat", b);
             param.put("img", icon);
-            
-           
             InputStream file = new FileInputStream(new File("src/app/report/ReportNonMember.jrxml"));
+            JasperDesign jd = JRXmlLoader.load(file);
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            JasperPrint jp = JasperFillManager.fillReport(jr,param,CC);
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setVisible(true);
+        }catch(Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
+    public void cardMember(int id){
+       
+        try{
+            HashMap param = new HashMap();
+            param.put("id",id);
+            InputStream file = new FileInputStream(new File("src/app/report/MemberCard.jrxml"));
             JasperDesign jd = JRXmlLoader.load(file);
             JasperReport jr = JasperCompileManager.compileReport(jd);
             JasperPrint jp = JasperFillManager.fillReport(jr,param,CC);

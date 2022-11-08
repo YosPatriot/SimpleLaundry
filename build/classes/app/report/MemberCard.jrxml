@@ -16,6 +16,7 @@
 	<parameter name="id" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="img" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT * FROM Customer WHERE Keterangan = 'Member' AND IdCustomer = $P{id}]]>
 	</queryString>
@@ -52,8 +53,8 @@
 					<text><![CDATA[Simply Fresh Card]]></text>
 				</staticText>
 				<image>
-					<reportElement x="328" y="0" width="82" height="70" uuid="df4dc664-33b3-4dd9-9990-7c8ab6215ca7"/>
-					<imageExpression><![CDATA["D:\\Dera\\Project an\\SimpleLaundry\\src\\app\\icon\\logo1.jpg"]]></imageExpression>
+					<reportElement x="327" y="0" width="83" height="70" uuid="36393d10-8e8f-4b42-a29d-1aa7c7d0da60"/>
+					<imageExpression><![CDATA[$P{img}]]></imageExpression>
 				</image>
 			</frame>
 		</band>
@@ -82,7 +83,7 @@
 	<detail>
 		<band height="73" splitType="Stretch">
 			<frame>
-				<reportElement style="Row" mode="Opaque" x="0" y="0" width="797" height="18" uuid="f2d4d6cd-032c-405f-ae35-4b60c1c9eaa5"/>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="410" height="18" uuid="f2d4d6cd-032c-405f-ae35-4b60c1c9eaa5"/>
 				<staticText>
 					<reportElement style="Column header" x="0" y="0" width="132" height="18" forecolor="#000000" uuid="98de76a0-ca31-4737-969a-53369c1c14a5"/>
 					<textElement>

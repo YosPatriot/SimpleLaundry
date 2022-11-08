@@ -10,9 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import javax.swing.JOptionPane;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -180,10 +178,12 @@ public class ServiceReport {
         }
     }
     public void cardMember(int id){
-       
+         HashMap param = new HashMap();
         try{
-            HashMap param = new HashMap();
+          
             param.put("id",id);
+            String icon = "src/app/report/logo1.jpg";
+            param.put("img", icon);
             InputStream file = new FileInputStream(new File("src/app/report/MemberCard.jrxml"));
             JasperDesign jd = JRXmlLoader.load(file);
             JasperReport jr = JasperCompileManager.compileReport(jd);

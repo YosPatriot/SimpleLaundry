@@ -178,9 +178,8 @@ public class ServiceReport {
         }
     }
     public void cardMember(int id){
-         HashMap param = new HashMap();
         try{
-          
+            HashMap param = new HashMap();
             param.put("id",id);
             String icon = "src/app/report/logo1.jpg";
             param.put("img", icon);

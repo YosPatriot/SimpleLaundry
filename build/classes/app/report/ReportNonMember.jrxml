@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e03d139f-1132-4ef2-a9e1-3228061b41de">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
-	<property name="ireport.x" value="33"/>
+	<property name="ireport.x" value="37"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="img" class="java.lang.String"/>
 	<parameter name="instansi" class="java.lang.String"/>
@@ -16,7 +16,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM Customer WHERE Keterangan = 'Member' AND CreatedAt >= $P{dari} AND CreatedAt <=$P{sampai} ORDER By CreatedAt]]>
+		<![CDATA[SELECT * FROM Customer WHERE Keterangan = 'Non-Member' AND CreatedAt >= $P{dari} AND CreatedAt <=$P{sampai} ORDER By CreatedAt]]>
 	</queryString>
 	<field name="IdCustomer" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -174,39 +174,39 @@
 			<rectangle>
 				<reportElement x="112" y="0" width="82" height="20" uuid="61462f78-6d79-4cef-b242-9109c02a85f3"/>
 			</rectangle>
-			<textField>
-				<reportElement x="112" y="0" width="82" height="19" uuid="7351b1a1-5efb-463e-9510-5270745fbf9e"/>
-				<textElement textAlignment="Center"/>
-				<textFieldExpression><![CDATA[$F{Nama}]]></textFieldExpression>
-			</textField>
 			<rectangle>
 				<reportElement x="401" y="0" width="90" height="20" uuid="3292ffe2-1f72-4f77-a931-23f044321c4f"/>
 			</rectangle>
+			<rectangle>
+				<reportElement x="491" y="0" width="67" height="20" uuid="18384248-a5f7-430b-bcd7-515021172f9f"/>
+			</rectangle>
 			<textField>
-				<reportElement x="44" y="0" width="68" height="19" uuid="edf2ea4f-77c4-409c-9c95-52aecff14811"/>
+				<reportElement x="44" y="1" width="68" height="20" uuid="30aca5ad-a0ff-4616-b231-2a4a49d71e91"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{IdCustomer}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="194" y="1" width="120" height="20" uuid="cf675005-b4ba-47fb-af1f-b02efbaf9a27"/>
+				<reportElement x="112" y="1" width="82" height="20" uuid="b79002e1-3e5e-456a-8fa1-51f2aefa4ebc"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Nama}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="194" y="1" width="120" height="20" uuid="3f624402-0fc4-4450-9be1-21b03027364f"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{Alamat}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="313" y="1" width="88" height="20" uuid="85fc3708-4c06-4d1d-bad5-caca1136c1bd"/>
+				<reportElement x="314" y="1" width="87" height="20" uuid="fe0f8cdd-a1d3-492c-b8b8-ee349e6d7e43"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{NoHP}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="401" y="1" width="90" height="20" uuid="07be83bf-dde8-4f95-ae42-507c695388d5"/>
+				<reportElement x="401" y="1" width="90" height="20" uuid="a67375fd-84e7-4424-8021-2ce23eb28327"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{Keterangan}]]></textFieldExpression>
 			</textField>
-			<rectangle>
-				<reportElement x="491" y="0" width="67" height="20" uuid="18384248-a5f7-430b-bcd7-515021172f9f"/>
-			</rectangle>
 			<textField pattern="dd-MMM-yy">
-				<reportElement x="491" y="1" width="67" height="20" uuid="86be5842-5abd-45a0-8750-2d8bdd75f80d"/>
+				<reportElement x="491" y="1" width="67" height="20" uuid="4911cb6f-f664-4e83-bcac-d9a6320aa5d3"/>
 				<textElement textAlignment="Center"/>
 				<textFieldExpression><![CDATA[$F{CreatedAt}]]></textFieldExpression>
 			</textField>

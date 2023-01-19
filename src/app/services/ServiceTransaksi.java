@@ -87,16 +87,16 @@ public class ServiceTransaksi {
             System.err.println(e);
         } 
      }
-     public void update(int id)throws SQLException{
-        try{
-           sql= "Update transaksi Set StatusTransaksi=? WHERE IdTrx="+id+" limit 1";
-           pst = CC.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-            pst.setString(1, "Lunas");
+    public void update(int id)throws SQLException{
+    try{
+        sql= "Update transaksi t JOIN cucian c ON t.IdCucian = c.IdCucian Set t.StatusTransaksi=?, c.Status=? WHERE t.IdTrx="+id+" limit 1";
+        pst = CC.prepareStatement(sql);
+        pst.setString(1, "Lunas");
+        pst.setString(2, "Cucian Siap Diambil");
         pst.execute();
-        rs.close();
-        pst.close();   
+        pst.close();
         }catch(SQLException e){
-            System.err.println(e);
+        System.err.println(e);
         }
     }
 }

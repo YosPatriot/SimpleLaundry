@@ -1,6 +1,7 @@
 package app.form;
 
 import app.component.Form;
+import app.services.ServiceReport;
 import app.services.ServiceTransaksi;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -15,8 +16,9 @@ public class DaftarTransaksi extends Form {
         st.getData(table);
         st.getDataSelesai(table1);
         btnLunas.setEnabled(false);
+        btnCetak.setVisible(false);
     }
-    int idTransaksi;
+    int idTransaksi,idTransaksi1;
     String status;
     private void update() throws SQLException{
         int response = JOptionPane.showConfirmDialog(this, "Apakah Transkasi Telah Selsai?", "Konfirmasi Transaksi", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
@@ -43,6 +45,7 @@ public class DaftarTransaksi extends Form {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         table1 = new javax.swing.JTable();
+        btnCetak = new javax.swing.JButton();
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -85,22 +88,39 @@ public class DaftarTransaksi extends Form {
                 "ID Transaksi", "ID Cucian", "Nama", "Jenis Cuci", "Sub Total", "Diskon", "Total Bayar", "Tanggal", "Status"
             }
         ));
+        table1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                table1MouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(table1);
+
+        btnCetak.setText("Cetak");
+        btnCetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCetakActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel4)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jScrollPane1)
             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnLunas)
-                    .addComponent(jLabel5))
+                .addComponent(btnLunas)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnCetak)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,10 +130,12 @@ public class DaftarTransaksi extends Form {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLunas)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(btnCetak))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -140,8 +162,27 @@ public class DaftarTransaksi extends Form {
        }
     }//GEN-LAST:event_btnLunasActionPerformed
 
+    private void btnCetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCetakActionPerformed
+        // TODO add your handling code here:
+        ServiceReport sr= new ServiceReport();
+        sr.getTrx(idTransaksi1);
+    }//GEN-LAST:event_btnCetakActionPerformed
+
+    private void table1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_table1MouseReleased
+        // TODO add your handling code here:
+        int row = table1.getSelectedRow();
+        idTransaksi1 = Integer.parseInt((table1.getModel().getValueAt(row,0)).toString());
+        //status = (String) table1.getModel().getValueAt(row,8);
+        if(idTransaksi1!=0){
+            btnCetak.setVisible(true);
+        }else{
+            btnCetak.setVisible(false);
+        }
+    }//GEN-LAST:event_table1MouseReleased
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCetak;
     private javax.swing.JButton btnLunas;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

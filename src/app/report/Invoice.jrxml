@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="470" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4932ae82-518d-4181-b27b-c9ef0c533dd9">
-	<property name="ireport.zoom" value="1.3310000000000222"/>
-	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.zoom" value="2.85311670611005"/>
+	<property name="ireport.x" value="91"/>
+	<property name="ireport.y" value="765"/>
 	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
 	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
@@ -17,7 +17,7 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[SELECT * FROM cucian JOIN transaksi ON transaksi.IdCucian = cucian.IdCucian JOIN customer ON customer.IdCustomer=cucian.IdCustomer JOIN jeniscuci ON jeniscuci.IdJenisCuci=cucian.IdJenisCuci WHERE transaksi.IdTrx = $P{id} AND transaksi.StatusTransaksi = 'Lunas'; ]]>
+		<![CDATA[SELECT * FROM cucian JOIN transaksi ON transaksi.IdCucian = cucian.IdCucian JOIN customer ON customer.IdCustomer=cucian.IdCustomer JOIN jeniscuci ON jeniscuci.IdJenisCuci=cucian.IdJenisCuci WHERE transaksi.IdTrx = $P{id} AND transaksi.StatusTransaksi = 'Lunas';]]>
 	</queryString>
 	<field name="IdCucian" class="java.lang.Integer">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -91,7 +91,7 @@
 				<reportElement mode="Opaque" x="0" y="0" width="557" height="74" forecolor="#D0B48E" backcolor="#FE0000" uuid="1f69e346-f349-4689-939e-396aa299a9e8"/>
 				<image>
 					<reportElement x="472" y="0" width="83" height="74" uuid="e10d8b84-af2e-49a1-8fde-a26cfef454e9"/>
-					<imageExpression><![CDATA["src//app//report/l/ogo.png"]]></imageExpression>
+					<imageExpression><![CDATA["src/app/report/logo1.jpg"]]></imageExpression>
 				</image>
 				<staticText>
 					<reportElement style="Column header" x="10" y="0" width="462" height="42" forecolor="#F7E610" uuid="e534d2fe-26ed-44f7-b826-bca541925f17"/>
@@ -268,12 +268,12 @@
 			<rectangle>
 				<reportElement x="424" y="0" width="100" height="22" uuid="06e81e98-710d-4f66-b4bd-e71b1393a6ad"/>
 			</rectangle>
-			<textField pattern="Rp #,##0">
+			<textField pattern="dd-MMM-yy">
 				<reportElement x="424" y="0" width="100" height="22" uuid="5a92d642-20df-4cdd-8944-8c5a0b4de319"/>
 				<textElement textAlignment="Center">
 					<font fontName="Gill Sans MT" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[java.time.format.DateTimeFormatter.ofPattern("dd-MM-yyyy").format($F{Tanggal})]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{Tanggal}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="24" y="0" width="100" height="22" uuid="b04f9722-bc70-4ce9-ad28-3d216b0d38d8"/>
@@ -317,46 +317,46 @@
 				<text><![CDATA[Yang Menerima]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="324" y="20" width="90" height="18" forecolor="#000000" uuid="f4589553-cc1b-4496-9c38-41d56a852123"/>
+				<reportElement style="Column header" x="324" y="20" width="78" height="18" forecolor="#000000" uuid="f4589553-cc1b-4496-9c38-41d56a852123"/>
 				<textElement>
 					<font fontName="Gill Sans MT" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Subtotal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="324" y="40" width="90" height="18" forecolor="#000000" uuid="1ba6c2c0-7f09-4e18-8066-a94eb3f65a76"/>
+				<reportElement style="Column header" x="324" y="36" width="78" height="18" forecolor="#000000" uuid="1ba6c2c0-7f09-4e18-8066-a94eb3f65a76"/>
 				<textElement>
 					<font fontName="Gill Sans MT" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Discount]]></text>
 			</staticText>
-			<textField pattern=": Rp #,##0 -">
-				<reportElement x="434" y="38" width="119" height="20" uuid="7ea33f81-9d50-4f26-8c3d-e97298d3b770"/>
+			<textField pattern="Rp #,## -">
+				<reportElement x="424" y="38" width="131" height="20" uuid="7ea33f81-9d50-4f26-8c3d-e97298d3b770"/>
 				<textElement textAlignment="Left">
 					<font fontName="Gill Sans MT" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Diskon}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[": "+$F{Diskon}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="Column header" x="324" y="56" width="90" height="18" forecolor="#000000" uuid="5c10add2-e805-4da6-9e73-b21c7296c3f9"/>
+				<reportElement style="Column header" x="324" y="54" width="78" height="18" forecolor="#000000" uuid="5c10add2-e805-4da6-9e73-b21c7296c3f9"/>
 				<textElement>
 					<font fontName="Gill Sans MT" size="12" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Jumlah Bayar]]></text>
 			</staticText>
-			<textField pattern=": Rp #,##0">
-				<reportElement x="434" y="54" width="119" height="20" uuid="783a9860-c80b-4fc9-8360-3c6dd78687be"/>
+			<textField pattern="Rp #,##0">
+				<reportElement x="424" y="54" width="131" height="20" uuid="783a9860-c80b-4fc9-8360-3c6dd78687be"/>
 				<textElement textAlignment="Left">
 					<font fontName="Gill Sans MT" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{GrandTotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[": "+$F{GrandTotal}]]></textFieldExpression>
 			</textField>
-			<textField pattern=": Rp #,##0">
-				<reportElement x="434" y="20" width="119" height="20" uuid="e754416d-fbb2-4f27-b644-e8b678569408"/>
+			<textField pattern="Rp #,##">
+				<reportElement x="424" y="20" width="131" height="20" uuid="e754416d-fbb2-4f27-b644-e8b678569408"/>
 				<textElement textAlignment="Left">
 					<font fontName="Gill Sans MT" size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Subtotal}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[": "+$F{Subtotal}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement style="Detail" positionType="Float" x="24" y="72" width="197" height="18" uuid="588a4199-bdef-4860-8479-0d33a94cb74f"/>

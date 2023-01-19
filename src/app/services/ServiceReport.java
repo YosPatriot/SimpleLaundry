@@ -3,6 +3,7 @@ package app.services;
 import app.configurations.koneksi;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.Date;
@@ -12,6 +13,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -204,7 +206,7 @@ public class ServiceReport {
             JasperPrint jp = JasperFillManager.fillReport(jr,param,CC);
             JasperViewer jv = new JasperViewer(jp, false);
             jv.setVisible(true);
-        }catch(Exception e){
+        }catch(FileNotFoundException | JRException e){
             e.printStackTrace();
             JOptionPane.showMessageDialog(null, e);
         }

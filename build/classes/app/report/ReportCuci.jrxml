@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="e03d139f-1132-4ef2-a9e1-3228061b41de">
 	<property name="ireport.zoom" value="1.0000000000000004"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="25"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="img" class="java.lang.String"/>
 	<parameter name="instansi" class="java.lang.String"/>
 	<parameter name="alamat" class="java.lang.String"/>
@@ -256,19 +256,12 @@
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch">
-			<staticText>
-				<reportElement x="331" y="15" width="70" height="20" uuid="0633d1ad-37f9-473f-abbb-a012c260b093"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[Manokwari,]]></text>
-			</staticText>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="401" y="15" width="154" height="20" uuid="b2e41a8e-22ac-4c00-bfe8-59530246449b"/>
-				<textElement>
+				<reportElement x="335" y="15" width="220" height="20" uuid="b2e41a8e-22ac-4c00-bfe8-59530246449b"/>
+				<textElement textAlignment="Center">
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Manokwari, "+new SimpleDateFormat("EEEE, dd MMMM yyyy", new java.util.Locale("id")).format(new java.util.Date())]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnFooter>

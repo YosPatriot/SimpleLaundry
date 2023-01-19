@@ -194,5 +194,20 @@ public class ServiceReport {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    public void getTrx(int id){
+        try{
+            HashMap param = new HashMap();
+            param.put("id",id);
+            InputStream file = new FileInputStream(new File("src/app/report/Invoice.jrxml"));
+            JasperDesign jd = JRXmlLoader.load(file);
+            JasperReport jr = JasperCompileManager.compileReport(jd);
+            JasperPrint jp = JasperFillManager.fillReport(jr,param,CC);
+            JasperViewer jv = new JasperViewer(jp, false);
+            jv.setVisible(true);
+        }catch(Exception e){
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }
      
 }
